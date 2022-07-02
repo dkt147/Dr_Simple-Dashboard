@@ -202,7 +202,7 @@
   margin: 0 auto;
 }
 .dashboardNavSection > div > section {
-  background-color: #F9FAFC;
+  background-color: #f9fafc;
   width: 333px;
   height: 45px;
   display: flex;
@@ -221,10 +221,10 @@
   outline: none;
 }
 .dashboardNavSection input::placeholder {
-  color: #9DA1A7;
+  color: #9da1a7;
 }
 .dashboardNavSection > div > div {
-  background-color: #F9FAFC;
+  background-color: #f9fafc;
   margin-left: 26px;
   width: 45px;
   height: 45px;
@@ -233,12 +233,13 @@
   justify-content: center;
   border: 1px solid #2732401a;
   border-radius: 15px;
+  cursor: pointer;
 }
 .dashboardTitleSection {
   display: flex;
   align-items: center;
   /* justify-content: space-between; */
-  background-color: #F9FAFC;
+  background-color: #f9fafc;
   border: 1px solid #2732401a;
   border-radius: 15px;
   padding: 0 15px;
@@ -249,13 +250,17 @@
   justify-content: center;
   align-items: center;
 }
-.dashboardTitleSection > div > img , .dashboardTableContent1 img {
+.dashboardTitleSection > div > img,
+.dashboardTableContent1 img {
   width: 20px;
   height: 20px;
 }
 .dashboardTitleSection > div > p {
   font-size: 14px;
   color: #273240;
+}
+.dashboardTableContent1 {
+  width: 100%;
 }
 .dashboardTableContent1 table {
   width: 100%;
@@ -288,10 +293,23 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 .table1SecondColumn {
   padding-left: 60px;
   width: 200px;
+}
+.table1FirstColumn i[class~="fa-square-check"], .table1FirstColumn i[class~="fa-square"] , .table2FirstColumn i[class~="fa-square-check"], .table2FirstColumn i[class~="fa-square"] {
+  font-size: 20px;
+  color: #979797;
+  /* width: 100%; */
+}
+.table1FirstColumn i[class~="fa-star"] {
+  font-size: 18px;
+  color: #979797;
+}
+.table1FirstColumn i[class~="fa-solid"], .table2FirstColumn i[class~="fa-solid"] {
+  color: #33cccc;
 }
 .table1SecondColumn img {
   width: 16px;
@@ -321,10 +339,10 @@
   font-size: 13px;
 }
 .redStatus {
-  background-color: #F33130;
+  background-color: #f33130;
 }
 .redStatusP {
-  color: #F33130 !important;
+  color: #f33130 !important;
 }
 .blackStatus {
   background-color: #000000;
@@ -336,21 +354,20 @@
   color: #33cccc !important;
 }
 .blueStatus {
-  background-color: #407EF6;
+  background-color: #407ef6;
   height: 38px !important;
 }
 .blueStatusP {
-  color: #407EF6 !important;
+  color: #407ef6 !important;
 }
 .table1FifthColumn {
   padding-left: 45px;
   padding-right: 50px;
 }
 .table1FifthColumn p {
-  color:#404852;
+  color: #404852;
   opacity: 0.5;
 }
-
 
 /* //// Patienten //// */
 
@@ -361,25 +378,26 @@
   border: none;
 }
 .table2Header {
-  background-color: #F9FAFC;
+  background-color: #f9fafc;
   height: 56px;
   border: 1px solid #2732401a;
   border-radius: 15px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  width: 100%;
 }
 .table2 div {
   display: flex;
   align-items: center;
   justify-content: center;
   margin-right: 20px;
-} 
+}
 .table2 p {
   width: 210px;
   justify-content: flex-start;
 }
-.table2FirstColumn div{
+.table2FirstColumn div {
   width: 45px;
 }
 .table2SecondColumn img {
@@ -448,6 +466,7 @@
   color: #979797;
 }
 .calendarWholeContainer table {
+  height: 100%;
   width: 100%;
   border-collapse: collapse;
   border: 1px solid #9e9e9e;
@@ -460,12 +479,14 @@
 .calendarWholeContainer tr {
   display: flex;
   /* justify-content: center; */
-  align-items: center;
+  /* align-items: center; */
   /* border: 1px solid #9e9e9e; */
+  height: 100%;
+  min-height: 10%;
 }
 .calendarWholeContainer td {
   /* width: 300px; */
-  height: 105px;
+  /* height: 105px; */
   width: 20%;
   border: 1px solid #9e9e9e;
   display: flex;
@@ -475,7 +496,7 @@
   padding: 5px;
 }
 .calenderFirstRow td {
-  height: 120px;
+  /* height: 120px; */
 }
 .calendarWholeContainer td section div {
   /* width: 100%; */
@@ -493,9 +514,17 @@
   margin-right: 15px;
 }
 .coloredCell {
-  background-color: #DCF6F6;
+  background-color: #dcf6f6;
 }
 
+@media only screen and (max-width: 1400px) {
+  .calendarWholeContainer td section div {
+    font-size: 12px;
+  }
+  .calendarWholeContainer td i {
+    font-size: 7px;
+  }
+}
 
 /* //// SubPages //// */
 
@@ -513,7 +542,7 @@
 }
 .dashboardMainRightSide {
   width: 32%;
-  background-color: #F9FAFC;
+  background-color: #f9fafc;
   top: 0;
   bottom: 0;
   padding: 40px 0;
@@ -536,6 +565,7 @@
 }
 .table3Header {
   position: relative;
+  width: 100%;
 }
 .backpagePointer {
   position: absolute;
@@ -583,6 +613,7 @@
 }
 .table3Content .namePara {
   width: 160px;
+  /* width: 25%; */
 }
 .table3Content .namePara img {
   margin-left: 5px;
@@ -635,21 +666,27 @@
   justify-content: flex-start;
   align-items: center;
 }
-.verificationPara input {
-  margin-left: 6px;
-  width: 16px !important;
-  height: 16px !important;
+.dashboardMainRightSide .firstCard .verificationPara i {
+  cursor: pointer;
+}
+.dashboardMainRightSide .firstCard .verificationPara i[class~="fa-regular"] {
+  margin-left: 5px;
+  color: #979797 !important;
+}
+.dashboardMainRightSide .firstCard .verificationPara i[class~="fa-solid"] {
+  margin-left: 5px;
+  color: #33cccc;
 }
 .dashboardMainRightSide > main div div i {
   position: absolute;
   right: 9px;
   top: 11px;
-  color: #F33130;
+  color: #f33130;
   font-size: 9px;
 }
 .dashboardMainRightSide .secondCard {
   position: relative;
-  background-color: #E3E4E5;
+  background-color: #e3e4e5;
   padding: 16px;
   font-size: 16px;
   box-shadow: 2px 2px 34px rgba(0, 0, 0, 0.08);
@@ -660,7 +697,7 @@
   padding: 16px;
   font-size: 16px;
   filter: drop-shadow(2px 2px 24px rgba(0, 0, 0, 0.08));
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   margin-bottom: 20px;
 }
 .thirdCard2 {
@@ -674,7 +711,7 @@
   padding: 16px;
 }
 .blueCard {
-  color:#407EF6;
+  color: #407ef6;
   display: flex;
   /* align-items: center; */
   justify-content: center;
@@ -684,4 +721,3 @@
   left: 15px;
   vertical-align: middle;
 }
-
