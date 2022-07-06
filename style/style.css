@@ -255,6 +255,9 @@
   width: 20px;
   height: 20px;
 }
+.dashboardTitleSection i {
+
+}
 .dashboardTitleSection > div > p {
   font-size: 14px;
   color: #273240;
@@ -299,16 +302,16 @@
   padding-left: 60px;
   width: 200px;
 }
-.table1FirstColumn i[class~="fa-square-check"], .table1FirstColumn i[class~="fa-square"] , .table2FirstColumn i[class~="fa-square-check"], .table2FirstColumn i[class~="fa-square"] {
+.dashboardTitleSection i[class~="fa-square"], .dashboardTitleSection i[class~="fa-square-check"], .table1FirstColumn i[class~="fa-square-check"], .table1FirstColumn i[class~="fa-square"] , .table2FirstColumn i[class~="fa-square-check"], .table2FirstColumn i[class~="fa-square"] {
   font-size: 20px;
   color: #979797;
   /* width: 100%; */
 }
-.table1FirstColumn i[class~="fa-star"] {
+.dashboardTitleSection i, .table1FirstColumn i[class~="fa-star"] {
   font-size: 18px;
   color: #979797;
 }
-.table1FirstColumn i[class~="fa-solid"], .table2FirstColumn i[class~="fa-solid"] {
+.dashboardTitleSection i[class~="fa-solid"], .table1FirstColumn i[class~="fa-solid"], .table2FirstColumn i[class~="fa-solid"] {
   color: #33cccc;
 }
 .table1SecondColumn img {
@@ -322,7 +325,7 @@
 }
 .table1ForthColumn {
   position: relative;
-  padding: 0 70px;
+  padding: 0 0px;
 }
 .table1ForthColumn > div {
   width: 110px;
@@ -361,8 +364,7 @@
   color: #407ef6 !important;
 }
 .table1FifthColumn {
-  padding-left: 45px;
-  padding-right: 50px;
+  padding-left: 65px;
 }
 .table1FifthColumn p {
   color: #404852;
@@ -386,6 +388,9 @@
   justify-content: flex-start;
   align-items: center;
   width: 100%;
+}
+.table2 i {
+  cursor: pointer;
 }
 .table2 div {
   display: flex;
@@ -460,6 +465,7 @@
   justify-content: center;
   align-items: center;
   margin-bottom: 5px;
+  cursor: pointer;
 }
 .calendarMonthTitle p {
   font-size: 20px;
@@ -495,9 +501,9 @@
   align-items: center;
   padding: 5px;
 }
-.calenderFirstRow td {
-  /* height: 120px; */
-}
+/* .calenderFirstRow td {
+   height: 120px;
+} */
 .calendarWholeContainer td section div {
   /* width: 100%; */
   display: flex;

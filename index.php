@@ -19,5 +19,9 @@
     <div class="flashPage">
         <img src="./image/logo.png" alt="">
     </div>
+
+    <script type="text/javascript">
+        setTimeout(function(){ window.location = "login.php"; },3000);
+    </script>
 </body>
 </html>
