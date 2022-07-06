@@ -448,8 +448,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 4px 10px;
-  width: 100px;
+  padding: 10px 15px;
+  width: 150px;
   border-radius: 30px;
   cursor: pointer;
 }

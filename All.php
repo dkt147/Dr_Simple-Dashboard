@@ -84,7 +84,7 @@
                                     appointment.book_date,appointment.reason,appointment.d_id
                                     FROM `appointment`
                                     JOIN patient
-                                    ON patient.id = appointment.u_id
+                                    ON patient.number = appointment.u_id
                                     order by id desc";
 
                         $res = mysqli_query($conn, $query);

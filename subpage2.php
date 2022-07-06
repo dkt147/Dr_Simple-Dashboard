@@ -56,7 +56,7 @@
                                     appointment.book_date,appointment.reason,appointment.d_id,appointment.updated_at
                                     FROM `appointment`
                                     JOIN patient
-                                    ON patient.id = appointment.u_id
+                                    ON patient.number = appointment.u_id
                                     WHERE appointment.type = 'consult'  and appointment.id = '$id'
                                     order by id desc";
 

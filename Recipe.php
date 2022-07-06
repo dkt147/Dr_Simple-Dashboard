@@ -84,7 +84,7 @@
                                     order.date
                                     FROM `order`
                                     JOIN patient
-                                    ON patient.id = order.u_id
+                                    ON patient.number = order.u_id
                                     JOIN recipe
                                     ON recipe.id = order.r_id
                                     order by id desc";

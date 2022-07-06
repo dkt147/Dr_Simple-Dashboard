@@ -57,7 +57,7 @@
                                     referal.date,categories.name as c_name,categories.detail,referal.is_failed
                                     FROM `referal`
                                     JOIN patient
-                                    ON patient.id = referal.u_id
+                                    ON patient.number = referal.u_id
                                     JOIN categories
                                     ON categories.id = referal.c_id
                                     where referal.id = '$id'

@@ -58,7 +58,7 @@
                                     appointment.book_date,appointment.reason,appointment.is_failed
                                     FROM `appointment`
                                     JOIN patient
-                                    ON patient.id = appointment.u_id
+                                    ON patient.number = appointment.u_id
                                     JOIN doctors
                                     ON doctors.id = appointment.d_id
                                     WHERE appointment.type = 'regular' and appointment.id = '$id'
