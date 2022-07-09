@@ -11,16 +11,21 @@ const showHideFunction = () => {
 const checkToggler = (box) => {
   if (box.className == "fa-regular fa-square forAllCheck") {
     box.className = "fa-solid fa-square-check forAllCheck";
+    box.nextElementSibling.checked = true;
+    // console.log(box.nextElementSibling.checked = "true")
   } else {
     box.className = "fa-regular fa-square forAllCheck";
+    box.nextElementSibling.checked = false;
   }
 };
 
 const starToggler = (e) => {
   if (e.className == "fa-regular fa-star forAllStar") {
     e.className = "fa-solid fa-star forAllStar";
+    e.nextElementSibling.checked = true;
   } else {
     e.className = "fa-regular fa-star forAllStar";
+    e.nextElementSibling.checked = false;
   }
 };
 
@@ -65,6 +70,7 @@ const allCheckToggler = (e) => {
   if (e.className == "fa-solid fa-square-check") {
     e.className = "fa-regular fa-square";
     for (let i = 0; i < forAllCheck.length; i++) {
+      forAllCheck[i].nextElementSibling.checked = false
       forAllCheck[i].className = "fa-regular fa-square forAllCheck";
       forAllCheck[i].className = "fa-regular fa-square forAllCheck";
       forAllCheck[i].className = "fa-regular fa-square forAllCheck";
@@ -79,6 +85,7 @@ const allCheckToggler = (e) => {
   } else {
     e.className = "fa-solid fa-square-check";
     for (let i = 0; i < forAllCheck.length; i++) {
+      forAllCheck[i].nextElementSibling.checked = true;
       forAllCheck[i].className = "fa-solid fa-square-check forAllCheck";
       forAllCheck[i].className = "fa-solid fa-square-check forAllCheck";
       forAllCheck[i].className = "fa-solid fa-square-check forAllCheck";
@@ -98,6 +105,7 @@ const allStarToggler = (s) => {
   if (s.className == "fa-solid fa-star") {
     s.className = "fa-regular fa-star";
     for (let i = 0; i < forAllCheck.length; i++) {
+      forAllStar[i].nextElementSibling.checked = false;
       forAllStar[i].className = "fa-regular fa-star forAllStar";
       forAllStar[i].className = "fa-regular fa-star forAllStar";
       forAllStar[i].className = "fa-regular fa-star forAllStar";
@@ -113,6 +121,7 @@ const allStarToggler = (s) => {
   } else {
     s.className = "fa-solid fa-star";
     for (let i = 0; i < forAllCheck.length; i++) {
+      forAllStar[i].nextElementSibling.checked = true;
       forAllStar[i].className = "fa-solid fa-star forAllStar";
       forAllStar[i].className = "fa-solid fa-star forAllStar";
       forAllStar[i].className = "fa-solid fa-star forAllStar";

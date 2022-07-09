@@ -29,6 +29,6 @@
         </div>
     </section>
     <div style="color: white;">
-        <p><b>Dashboard</b> | Patienten</p>
+        <p><a href="All.php" style="text-decoration: none;color:white"><b>Dashboard</b></a> | Patienten</p>
     </div>
 </section>

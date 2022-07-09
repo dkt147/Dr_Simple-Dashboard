@@ -4,6 +4,16 @@
   box-sizing: border-box;
   font-family: "Inter", sans-serif;
 }
+/* input[type=checkbox] {
+  width: 18px;
+  height: 18px;
+  accent-color: #33cccc;
+  color: #ffffff;
+}
+input[type=checkbox]:checked::before {
+  background-color: #33cccc !important;
+  color: #ffffff !important;
+} */
 /* #33CCCC */
 .dashboardWholeBody {
   background-color: #33cccc;
@@ -201,7 +211,7 @@
   align-items: center;
   margin: 0 auto;
 }
-.dashboardNavSection > div > section {
+.dashboardNavSection > div section {
   background-color: #f9fafc;
   width: 333px;
   height: 45px;
@@ -211,6 +221,11 @@
   border: 1px solid #2732401a;
   padding: 15px;
   border-radius: 15px;
+}
+.dashboardNavSection > div form {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 .dashboardNavSection input {
   width: 100%;
@@ -223,7 +238,7 @@
 .dashboardNavSection input::placeholder {
   color: #9da1a7;
 }
-.dashboardNavSection > div > div {
+.dashboardNavSection > div div {
   background-color: #f9fafc;
   margin-left: 26px;
   width: 45px;
@@ -255,9 +270,6 @@
   width: 20px;
   height: 20px;
 }
-.dashboardTitleSection i {
-
-}
 .dashboardTitleSection > div > p {
   font-size: 14px;
   color: #273240;
@@ -281,6 +293,9 @@
   justify-content: space-between;
   align-items: center;
 }
+.dashboardTableContent1 input[type="checkbox"] {
+  display: none;
+}
 .dashboardTableContent1 p {
   font-size: 14px;
   display: flex;
@@ -302,6 +317,9 @@
   padding-left: 60px;
   width: 200px;
 }
+/* .dashboardTableContent1 .table1FirstColumn input[type=checkbox]:checked {
+  background-color: #33cccc !important;
+} */
 .dashboardTitleSection i[class~="fa-square"], .dashboardTitleSection i[class~="fa-square-check"], .table1FirstColumn i[class~="fa-square-check"], .table1FirstColumn i[class~="fa-square"] , .table2FirstColumn i[class~="fa-square-check"], .table2FirstColumn i[class~="fa-square"] {
   font-size: 20px;
   color: #979797;
@@ -325,7 +343,7 @@
 }
 .table1ForthColumn {
   position: relative;
-  padding: 0 0px;
+  padding: 0 70px;
 }
 .table1ForthColumn > div {
   width: 110px;
@@ -364,7 +382,8 @@
   color: #407ef6 !important;
 }
 .table1FifthColumn {
-  padding-left: 65px;
+  padding-left: 45px;
+  padding-right: 50px;
 }
 .table1FifthColumn p {
   color: #404852;
@@ -448,8 +467,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 15px;
-  width: 150px;
+  padding: 4px 10px;
+  width: 100px;
   border-radius: 30px;
   cursor: pointer;
 }

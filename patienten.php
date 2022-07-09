@@ -29,7 +29,7 @@
         <img src="./image/logo.png" alt="">
 
         <div style="color: white;">
-            <p><b>Dashboard</b> | Patienten</p>
+            <p><a href="All.php" style="text-decoration: none;color:white"><b>Dashboard</b></a> | Patienten</p>
         </div>
     </section>
 
@@ -38,33 +38,34 @@
         <header class="dashboardNavSection">
             <h2>Patienten</h2>
             <div>
-                <section>
-                    <img src="./image/Dashboard/Nav Section/search.png" width="20px" height="19px" alt="">
-                    <input type="text" placeholder="Suchen">
-                </section>
-                <div>
-                    <img src="./image/Dashboard/Nav Section/setting.png" width="22px" height="22px" alt="">
-                </div>
-
+                <form action="patienten.php" method="post">
+                    <section>
+                        <img src="./image/Dashboard/Nav Section/search.png" width="20px" height="19px" alt="">
+                        <input type="text" placeholder="Suchen" name="searchproduct">
+                        <select name="filterproduct">
+                            <option value="done">Done</option>
+                            <option value="undone">UnDone</option>
+                            <option value="accepted">Accepted</option>
+                            <option value="decline">Decline</option>
+                            <option value="star">Star</option>
+                        </select>
+                    </section>
+                    <div>
+                        <input type="submit" style="background-image: url('./image/Dashboard/Nav Section/setting.png'); border:none; background-repeat:no-repeat;background-size:100% 100%;" width="22px" height="22px" alt="" value="" name="searchbtn">
+                    </div>
+                </form>
             </div>
-            <section class="dashboardNavEndContainer">
-                <div>
-                    <img src="./image/Dashboard/Nav Section/umbrella.png" alt="">
-                </div>
-                <div style="margin-left: 25px;">
-                    <img src="./image/Dashboard/Nav Section/megaphone.png" alt="">
-                </div>
-                <div>
-                    <a href="logout.php"><img src="./image/Dashboard/Nav Section/logout.png" alt=""></a>
-                </div>
-            </section>
+
+            <?php include "action.php"; ?>
         </header>
         <main>
             <section class="dashboardTableContent1">
                 <table class="table2">
                     <tr class="table2Header">
                         <td class="table2FirstColumn">
-                            <div><i class="fa-regular fa-square" onclick="allCheckToggler(this)"></i></div>
+                            <div><i class="fa-regular fa-square forAllCheck" onclick="checkToggler(this)"></i><input type="checkbox" class="inputCheckField" name="check" value="<?php echo $row['a_id'] ?>" ></div>
+                            </div>
+
                         </td>
                         <td class="table2SecondColumn">
                             <p>Patient</p>
@@ -84,9 +85,9 @@
                         </td>
                         <td class="tableSeparator"> | </td>
                         <td class="table2IconSect">
-                            <div><img src="./image/Dashboard/UserTitleSection/sms.png" alt=""></div>
-                            <div><img src="./image/Dashboard/TitleSection/verified-badge.png" alt=""></div>
-                            <div><img src="./image/Dashboard/UserTitleSection/block.png" alt=""></div>
+                            <div id="reply_user"><img src="./image/Dashboard/UserTitleSection/sms.png" alt=""></div>
+                            <div id="verify_user"><img src="./image/Dashboard/TitleSection/verified-badge.png" alt=""></div>
+                            <div id="block_user"><img src="./image/Dashboard/UserTitleSection/block.png" alt=""></div>
                         </td>
                     </tr>
                     <?php
@@ -94,9 +95,11 @@
                     //Stablishing Connection...
                     include 'config.php';
 
-                    if(isset($_POST['searchbtn']) && !empty($_POST['searchproduct']))
+                    if(isset($_POST['searchbtn']) && (!empty($_POST['searchproduct']) or !empty($_POST['filterproduct'])))
                     {
                         $name = $_POST['searchproduct'];
+                        $filter = $_POST['filterproduct'];
+
                         $query = "SELECT * FROM `patient` where name = '$name' order by id desc";
                         $res = mysqli_query($conn, $query);
                     }
@@ -112,10 +115,20 @@
                     ?>
                     <tr class="table2Content">
                         <td class="table2FirstColumn">
-                            <div><i class="fa-regular fa-square forAllCheck" onclick="checkToggler(this)"></i></div>
+                            <div><i class="fa-regular fa-square forAllCheck" onclick="checkToggler(this)"></i><input type="checkbox" class="inputCheckField" name="check" value="<?php echo $row['id'] ?>" ></div>
+
                         </td>
                         <td class="table2SecondColumn">
-                            <p><?php echo $row['name'];?></p>
+                            <p><?php echo $row['name'];?>
+<?php
+if($row['is_active'] == 1){
+    ?>
+                                <img src="./image/Dashboard/TitleSection/verified-badge.png" alt="" >
+
+    <?php
+}
+?>
+                            </p>
 
                         </td>
                         <td class="table3ThirdColumn">
@@ -130,9 +143,20 @@
                             <p><?php echo $row['date'];?></p>
 
                         </td>
-                        <td class="tableSeparator hiddenElement"> | </td>
-                        <td class="table2IconSect">
+                        <td class="mytableSeparator" style="margin-left: 37px">
+                          <?php
+                          if($row['is_active'] == 1){
+                            ?>
+                            <img src="./image/Dashboard/TitleSection/verified-badge.png" alt="">
+                            <?php
+                            }if($row['is_block'] == 1){
+                                ?>
+                               <img src="./image/Dashboard/UserTitleSection/block.png" alt="" >
+                                <?php
+                            }
+?>
                         </td>
+
                     </tr>
 <?php
                     }
@@ -146,5 +170,147 @@
 </main>
 </body>
 <script src="./script/app.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
 
+        // Verify user
+        $("#verify_user").on("click",function(){
+
+            var id = [];
+
+            // Converted all checked checkbox's value into Array
+            $(":checkbox:checked").each(function(key){
+                id[key] = $(this).val();
+            });
+            console.log(id)
+
+            if(id.length === 0){
+                alert("Please Select atleast one star.");
+            }else{
+                if(confirm("Do you really want to verify these records ?")){
+                    $.ajax({
+                        url : "verify__user.php",
+                        type : "POST",
+                        data : {id : id},
+                        success : function(data){
+                            if(data == 1){
+                                alert("Marked as verified.");
+                                location.reload();
+                            }else{
+                            }
+                        }
+                    });
+                }
+            }
+        });
+
+        // Block User
+        $("#block_user").on("click",function(){
+
+            var id = [];
+
+            // Converted all checked checkbox's value into Array
+            $(":checkbox:checked").each(function(key){
+                id[key] = $(this).val();
+            });
+            console.log(id)
+
+            if(id.length === 0){
+                alert("Please Select atleast one star.");
+            }else{
+                if(confirm("Do you really want to block these users ?")){
+                    $.ajax({
+                        url : "block__user.php",
+                        type : "POST",
+                        data : {id : id},
+                        success : function(data){
+                            if(data == 1){
+                                alert("Blocked User.");
+                                location.reload();
+                            }else{
+                            }
+                        }
+                    });
+                }
+            }
+        });
+
+        // Block User
+        $("#reply_user").on("click",function(){
+
+            var id = [];
+
+            // Converted all checked checkbox's value into Array
+            $(":checkbox:checked").each(function(key){
+                id[key] = $(this).val();
+            });
+            console.log(id)
+
+            if(id.length === 0){
+                alert("Please Select atleast one star.");
+            }else{
+                let person = prompt("Please enter message:", "");
+                if (person == null || person == "") {
+
+                } else {
+                    if(confirm("Do you really want to block these users ?")){
+                        $.ajax({
+                            url : "reply__user.php",
+                            type : "POST",
+                            data : {id : id,message : person,},
+                            success : function(data){
+                                if(data == 1){
+                                    alert("Message Sent.");
+                                    location.reload();
+                                }else{
+                                }
+                            }
+                        });
+                    }
+                }
+
+            }
+        });
+
+        // // All Data Star
+        // $("#reply_user").on("click",function(){
+        //
+        //     console.log('asas')
+        //     // let message;
+        //     // let person = prompt("Please enter message:", "");
+        //     // if (person == null || person == "") {
+        //     //
+        //     // } else {
+        //     //     message = person;
+        //
+        //         var id = [];
+        //
+        //         // Converted all checked checkbox's value into Array
+        //         $(":checkbox:checked").each(function(key){
+        //             id[key] = $(this).val();
+        //         });
+        //         console.log(id)
+        //
+        //         if(id.length === 0){
+        //             alert("Please Select atleast one star.");
+        //         }else{
+        //             if(confirm("Do you really want to send this message ?")){
+        //                 $.ajax({
+        //                     url : "reply__user.php",
+        //                     type : "POST",
+        //                     data : {id : id}
+        //                     success : function(data){
+        //                             alert("Message Sent.");
+        //                             location.reload();
+        //                     }
+        //                 });
+        //             }
+        //         }
+        //     // }
+        //
+        // });
+
+    });
+</script>
 </html>
