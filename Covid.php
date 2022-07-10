@@ -102,11 +102,6 @@
                                             $res = mysqli_query($conn, $query);
                                         }
                                         else{
-                                            $query1 = "SELECT * FROM appointment where type = 'covid' group by book_date desc";
-                                            $res1 = mysqli_query($conn, $query1);
-
-                                            $count = mysqli_num_rows($res1);
-
                                             $query = "SELECT
                                                         patient.id,
                                                         patient.name,
@@ -131,9 +126,6 @@
                                                     $unique_data[$row['book_date']][]=$row;
                                                 }
 
-                                                if(!in_array($row['book_date'], $a)){
-                                                    $unique_data[$row['book_date']][]=$row;
-
                                                 ?>
                     <div class="col-md-4" style="margin-bottom: 10px;margin-left: 20px">
                         <div class="card card-body">
@@ -142,10 +134,8 @@
                     </div>
 
                     <?php
-                    }
                      }
-                                            $unique_data = json_encode($unique_data);
-                                            echo $unique_data[0];
+
 
                                         }
                                         ?>

@@ -29,7 +29,7 @@
         <img src="./image/logo.png" alt="">
 
         <div style="color: white;">
-            <p><a href="All.php" style="text-decoration: none;color:white"><b>Dashboard</b></a> | Patienten</p>
+            <p><a href="All.php" style="text-decoration: none;color:white">Dashboard</a> | <b>Patienten</b></p>
         </div>
     </section>
 
@@ -61,6 +61,7 @@
         <main>
             <section class="dashboardTableContent1">
                 <table class="table2">
+                    <tbody>
                     <tr class="table2Header">
                         <td class="table2FirstColumn">
                             <div><i class="fa-regular fa-square forAllCheck" onclick="checkToggler(this)"></i><input type="checkbox" class="inputCheckField" name="check" value="<?php echo $row['a_id'] ?>" ></div>
@@ -163,9 +164,11 @@ if($row['is_active'] == 1){
                     }
 
 ?>
+                    </tbody>
                 </table>
             </section>
         </main>
+        <div class="bottomAbsoluteDiv"></div>
     </section>
 </main>
 </body>

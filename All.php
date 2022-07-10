@@ -31,7 +31,7 @@
         <header class="dashboardNavSection">
             <h2>Dashboard</h2>
             <div>
-                <form action="All.php" method="post">
+            <form action="All.php" method="post">
                     <section>
                         <img src="./image/Dashboard/Nav Section/search.png" width="20px" height="19px" alt="">
                         <input type="text" placeholder="Suchen" name="searchproduct">
@@ -68,12 +68,12 @@
                 <div style="margin-left: 150px;">
                     <p>Zeit</p>
                 </div>
-                <div style="margin-left: auto ; padding-left: 25px; cursor: pointer;" id="delete-btn"><img
+                <div style="margin-left: auto ; padding-left: 25px; cursor: pointer;" class="delete-btn"><img
                             src="./image/Dashboard/TitleSection/trash.png" alt=""></div>
             </section>
             <section class="dashboardTableContent1">
                 <table>
-
+                    <tbody>
                     <?php
 
                     //Stablishing Connection...
@@ -93,7 +93,7 @@
                                     appointment.book_date,appointment.reason,appointment.d_id,appointment.is_star
                                     FROM `appointment`
                                     JOIN patient
-                                    ON patient.number = appointment.u_id WHERE patient.name = '$name'
+                                    ON patient.number = appointment.u_id WHERE patient.name = '$name' and appointment.type != 'covid'
                                     order by id desc";
                         $res = mysqli_query($conn, $query);
                     }
@@ -106,7 +106,7 @@
                                     appointment.book_date,appointment.reason,appointment.d_id,appointment.is_star
                                     FROM `appointment`
                                     JOIN patient
-                                    ON patient.number = appointment.u_id
+                                    ON patient.number = appointment.u_id Where appointment.type != 'covid'
                                     order by id desc";
 
                         $res = mysqli_query($conn, $query);
@@ -130,7 +130,7 @@
                             <?php
                         }else{
                             ?>
-                                <div id="single_star"><i class="fa-regular fa-star forAllStar" onclick="starToggler(this)" ></i>
+                                <div class="single_star"><i class="fa-regular fa-star forAllStar" onclick="starToggler(this)" ></i>
                             <input type="checkbox" class="inputStarField" name="star" value="<?php echo $row['a_id'] ?>" >
                             <?php
                             }
@@ -158,34 +158,44 @@
                                     if($row['is_confirm'] == 1 and $row['is_completed'] == 0){
                                         if($row['type'] == 'regular' or $row['type'] == 'consult'){
                                         ?>
-                                        <div class="blueStatus"></div>
-                                        <p class="blueStatusP">
-                                        <?php echo $row['book_date'];?>
-                                        </p>
+                                        <div class="blueStatus">
+                                            <p class="blueStatusP">
+                                                <?php echo $row['book_date'];?>
+                                            </p>
+                                        </div>
+
                                    <?php } else{
                                             ?>
-                                            <div class="redStatus"></div>
-                                            <p class="redStatusP">
-                                                <?php echo 'In Progress';?>
-                                            </p>
+                                            <div class="redStatus">
+                                                <p class="redStatusP">
+                                                    <?php echo 'In Progress';?>
+                                                </p>
+                                            </div>
+
                                        <?php
                                         }
                                     }else if($row['is_completed'] == 1){?>
-                                        <div class="lightBlueStatus"></div>
-                                        <p class="lightBlueStatusP">
-                                          <?php  echo 'Completed';?>
-                                        </p>
+                                        <div class="lightBlueStatus">
+                                            <p class="lightBlueStatusP">
+                                                <?php  echo 'Completed';?>
+                                            </p>
+                                        </div>
+
                                     <?php
                                     }else if($row['is_failed'] == 1){?>
-                                        <div class="blackStatus"></div>
-                                        <p class="blackStatusP">
-                                        <?php echo 'Failed';?>
-                                        </p>
+                                        <div class="blackStatus">
+                                            <p class="blackStatusP">
+                                                <?php echo 'Failed';?>
+                                            </p>
+                                        </div>
+
                                   <?php  }else{?>
-                                <div class="redStatus"></div>
-                                <p class="redStatusP">
-                                    <?php echo 'Requested ';?>
-                                </p>
+                                <div class="redStatus">
+                                    <p class="redStatusP">
+                                        <?php echo 'Requested ';?>
+                                    </p>
+                                </div>
+
                             <?php  }
                             ?>
                         </td>
@@ -198,20 +208,23 @@
                     }
 
 ?>
-
+                    </tbody>
                 </table>
             </section>
         </main>
+        <div class="bottomAbsoluteDiv"></div>
     </section>
 </main>
 </body>
 <script type="text/javascript" src="js/jquery.js"></script>
 <script src="./script/app.js"></script>
+<script src="logout_timer.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
 
         // Single Data Star
-        $("#single_star").on("click",function(){
+        $(".single_star").on("click",function(){
+            console.log(id)
 
             var id = [];
 
@@ -219,25 +232,21 @@
             $(":checkbox:checked").each(function(key){
                 id[key] = $(this).val();
             });
-            console.log(id)
 
             if(id.length === 0){
                 alert("Please Select atleast one star.");
             }else{
-                if(confirm("Do you really want to star this records ?")){
                     $.ajax({
                         url : "star_all_data.php",
                         type : "POST",
                         data : {id : id},
                         success : function(data){
                             if(data == 1){
-                                alert("Marked as important.");
                                 location.reload();
                             }else{
                             }
                         }
                     });
-                }
             }
         });
 
@@ -292,7 +301,6 @@
                         data : {id : id},
                         success : function(data){
                             if(data == 1){
-                                alert("Marked as important.");
                                 location.reload();
                             }else{
                             }
@@ -303,7 +311,7 @@
         });
 
         // Multiple Data Delete
-        $("#delete-btn").on("click",function(){
+        $(".delete-btn").on("click",function(){
             console.log('multiple select')
             var id = [];
 
@@ -323,7 +331,6 @@
                         data : {id : id},
                         success : function(data){
                             if(data == 1){
-                                alert("Data deleted successfully.");
                                 location.reload();
                             }else{
                             }

@@ -9,6 +9,7 @@
 
     <!-- //// CSS //// -->
     <link rel="stylesheet" href="./style/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <!-- //// Google Fonts //// -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -161,16 +162,20 @@
             <main>
 
                                 <div class="thirdCard thirdCard2" id="acceptRequest" >
-                                    Datum speichern
-                                   <input type="date" value="<?php echo $row['book_date']?>" disabled id="save_date">
+                                    <form action="save_consult.php" method="post">
+                                        <input type="text" value="<?php echo $row['a_id']?>" hidden name="a_id">
+                                   <input type="date" class="form-control" name="date">
+                                    <input type="time" class="form-control" name="time"><br>
+                                        <input type="submit" value="Datum speichern" class="btn btn-primary">
+                                    </form>
                                 </div>
 
                 <div class="thirdCard3" id="declineRequest" <?php echo $style22?>>
-                    Anfrage ablehnen
+
                     <form action="save_date_consult.php" method="post">
                         <input type="text" value="<?php echo $row['a_id']?>" hidden name="a_id">
-                    <input type="date" id="save_date_value" <?php echo $date_style?> <?php echo $date_value?> name="save_date_value" required>
-                    <input type="submit"  value="save date" <?php echo $date_style?>>
+<!--                    <input type="date" id="save_date_value" --><?php //echo $date_style?><!-- --><?php //echo $date_value?><!-- name="save_date_value" required>-->
+                    <input type="submit"  value="Anfrage ablehnen" class="btn btn-primary" style="background-color: #007bff !important;">
                     </form>
                     <div></div>
                 </div>

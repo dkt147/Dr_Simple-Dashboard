@@ -58,16 +58,19 @@
                 <div style="margin-left: 60px;">
                     <p>Patient</p>
                 </div>
-                <div style="margin-left: 160px;">
+                <div style="margin-left: 140px;">
                     <p>Recipe</p>
                 </div>
-                <div style="margin-left: 340px;">
+                <div style="margin-left: 140px;">
+                    <p>Dose</p>
+                </div>
+                <div style="margin-left: 120px;">
                     <p>Status</p>
                 </div>
-                <div style="margin-left: 150px;">
+                <div style="margin-left: 120px;">
                     <p>Zeit</p>
                 </div>
-                <div style="margin-left: auto ; padding-left: 25px; cursor: pointer;" id="delete-btn"><img
+                <div style="margin-left: auto ; padding-left: 15px; cursor: pointer;" class="delete-btn"><img
                             src="./image/Dashboard/TitleSection/trash.png" alt=""></div>
             </section>
             <section class="dashboardTableContent1">
@@ -132,7 +135,7 @@
                                         <?php
                                         }else{
                                         ?>
-                                        <div id="single_star"><i class="fa-regular fa-star forAllStar" onclick="starToggler(this)" ></i>
+                                        <div class="single_star"><i class="fa-regular fa-star forAllStar" onclick="starToggler(this)" ></i>
                                             <input type="checkbox" class="inputStarField" name="star" value="<?php echo $row['o_id'] ?>" >
                                             <?php
                                             }
@@ -143,7 +146,7 @@
                                     <p><?php echo $row['u_name'] ?>
 
                                         <?php
-                                        if($row['is_active'] == 1){
+                                        if($row['is_active'] == 0){
                                             ?>
                                             <img src="./image/Dashboard/TitleSection/verified-badge.png" alt="">
                                             <?php
@@ -155,33 +158,40 @@
                                 <td class="table1ThirdColumn" onclick="location.href = 'subpage1.php?id=<?php echo $row['o_id'] ?>';">
                                     <p><?php echo $row['r_name'] ?></p>
                                 </td>
+                                <td class="table1SixthColumn" onclick="location.href = 'subpage1.php?id=<?php echo $row['o_id'] ?>';">
+                                    <p><?php echo $row['power'] ?></p>
+                                </td>
                                 <td class="table1ForthColumn" onclick="location.href = 'subpage1.php?id=<?php echo $row['o_id'] ?>';">
+
+
                                     <?php
                                     if($row['is_confirm'] == 1 and $row['is_completed'] == 0 and $row['is_failed'] == 0){
                                             ?>
-                                            <div class="redStatus"></div>
-                                            <p class="redStatusP">
-                                                <?php echo 'In Progress';?>
-                                            </p>
+                                            <div class="redStatus"> <p class="redStatusP">
+                                                    <?php echo 'In Progress';?>
+                                                </p></div>
+
                                             <?php
                                     }else if($row['is_completed'] == 1){?>
-                                        <div class="lightBlueStatus"></div>
-                                        <p class="lightBlueStatusP">
-                                            <?php  echo 'Completed';?>
-                                        </p>
+                                        <div class="lightBlueStatus"> <p class="lightBlueStatusP">
+                                                <?php  echo 'Completed';?>
+                                            </p></div>
+
                                         <?php
                                     }else if($row['is_failed'] == 1){?>
-                                        <div class="blackStatus"></div>
-                                        <p class="blackStatusP">
-                                            <?php echo 'Failed';?>
-                                        </p>
+                                        <div class="blackStatus"> <p class="blackStatusP">
+                                                <?php echo 'Failed';?>
+                                            </p></div>
+
                                     <?php  }else{?>
-                                        <div class="redStatus"></div>
-                                        <p class="redStatusP">
-                                            <?php echo 'Requested ';?>
-                                        </p>
+                                        <div class="redStatus"> <p class="redStatusP">
+                                                <?php echo 'Requested ';?>
+                                            </p></div>
+
                                     <?php  }
                                     ?>
+
+
                                 </td>
                                 <td class="table1FifthColumn" onclick="location.href = 'subpage1.php?id=<?php echo $row['o_id'] ?>';">
                                     <p><?php echo $row['date'] ?></p>
@@ -204,7 +214,7 @@
     $(document).ready(function(){
 
         // Single Data Star
-        $("#single_star").on("click",function(){
+        $(".single_star").on("click",function(){
 
             var id = [];
 
@@ -217,20 +227,17 @@
             if(id.length === 0){
                 alert("Please Select atleast one star.");
             }else{
-                if(confirm("Do you really want to star this records ?")){
                     $.ajax({
                         url : "star_recipe_data.php",
                         type : "POST",
                         data : {id : id},
                         success : function(data){
                             if(data == 1){
-                                alert("Marked as important.");
                                 location.reload();
                             }else{
                             }
                         }
                     });
-                }
             }
         });
 
@@ -292,7 +299,7 @@
         });
 
         // Multiple Data Delete
-        $("#delete-btn").on("click",function(){
+        $(".delete-btn").on("click",function(){
             console.log('multiple select')
             var id = [];
 
@@ -312,7 +319,6 @@
                         data : {id : id},
                         success : function(data){
                             if(data == 1){
-                                alert("Data deleted successfully.");
                                 location.reload();
                             }else{
 

@@ -67,7 +67,7 @@
                 <div style="margin-left: 150px;">
                     <p>Zeit</p>
                 </div>
-                <div style="margin-left: auto ; padding-left: 25px; cursor: pointer;" id="delete-btn"><img
+                <div style="margin-left: auto ; padding-left: 25px; cursor: pointer;" class="delete-btn"><img
                             src="./image/Dashboard/TitleSection/trash.png" alt="" ></div>
             </section>
             <section class="dashboardTableContent1">
@@ -129,7 +129,7 @@
                                         <?php
                                         }else{
                                         ?>
-                                        <div id="single_star"><i class="fa-regular fa-star forAllStar" onclick="starToggler(this)" ></i>
+                                        <div class="single_star"><i class="fa-regular fa-star forAllStar" onclick="starToggler(this)" ></i>
                                             <input type="checkbox" class="inputStarField" name="star" value="<?php echo $row['a_id'] ?>" >
                                             <?php
                                             }
@@ -155,27 +155,27 @@
                                     <?php
                                     if($row['is_confirm'] == 1 and $row['is_completed'] == 0){
                                         ?>
-                                        <div class="blueStatus"></div>
-                                        <p class="blueStatusP">
-                                            <?php echo $row['book_date'];?>
-                                        </p>
+                                        <div class="blueStatus"> <p class="blueStatusP">
+                                                <?php echo $row['book_date'];?>
+                                            </p></div>
+
                                         <?php
                                     }else if($row['is_completed'] == 1){?>
-                                        <div class="lightBlueStatus"></div>
-                                        <p class="lightBlueStatusP">
-                                            <?php  echo 'Completed';?>
-                                        </p>
+                                        <div class="lightBlueStatus"><p class="lightBlueStatusP">
+                                                <?php echo $row['book_date'];?>
+                                            </p></div>
+
                                         <?php
                                     }else if($row['is_failed'] == 1){?>
-                                        <div class="blackStatus"></div>
-                                        <p class="blackStatusP">
-                                            <?php echo 'Failed';?>
-                                        </p>
+                                        <div class="blackStatus"> <p class="blackStatusP">
+                                                <?php echo 'Failed';?>
+                                            </p></div>
+
                                     <?php  }else{?>
-                                        <div class="redStatus"></div>
-                                        <p class="redStatusP">
-                                            <?php echo 'Requested ';?>
-                                        </p>
+                                        <div class="redStatus"><p class="redStatusP">
+                                                <?php echo 'Requested ';?>
+                                            </p></div>
+
                                     <?php  }
                                     ?>
                                 </td>
@@ -200,7 +200,7 @@
     $(document).ready(function(){
 
         // Single Data Star
-        $("#single_star").on("click",function(){
+        $(".single_star").on("click",function(){
 
             var id = [];
 
@@ -213,20 +213,17 @@
             if(id.length === 0){
                 alert("Please Select atleast one star.");
             }else{
-                if(confirm("Do you really want to star this records ?")){
                     $.ajax({
                         url : "star_all_data.php",
                         type : "POST",
                         data : {id : id},
                         success : function(data){
                             if(data == 1){
-                                alert("Marked as important.");
                                 location.reload();
                             }else{
                             }
                         }
                     });
-                }
             }
         });
 
@@ -288,7 +285,7 @@
         });
 
         // Multiple Data Delete
-        $("#delete-btn").on("click",function(){
+        $(".delete-btn").on("click",function(){
             console.log('multiple select')
             var id = [];
 
@@ -308,7 +305,6 @@
                         data : {id : id},
                         success : function(data){
                             if(data == 1){
-                                alert("Data deleted successfully.");
                                 location.reload();
                             }else{
                             }
