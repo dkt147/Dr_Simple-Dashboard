@@ -145,7 +145,7 @@
                 </section>
             </main>
         </section>
-        <section class="dashboardMainRightSide">
+        <section class="dashboardMainRightSide" style="width: 24%!important;">
             <header>
                 <section class="dashboardNavEndContainer subpageNavEndContainer">
                     <div>
@@ -187,5 +187,6 @@
 
 <script src="./script/app.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="logout_timer.js"></script>
 
 </html>

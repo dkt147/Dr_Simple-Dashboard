@@ -42,16 +42,6 @@ if(isset($_POST['login'])){
     $number = $_POST['number'];
     $password = $_POST['password'];
 
-//    $query1 = $conn->prepare("SELECT * FROM patient WHERE number = ? and password = ?");
-//    $query1->bind_param('ss',$number, $password);
-//    $query1->execute();
-//    $query1->close();
-//
-//    header("Location: All.php");
-
-//Connection Close...
-//    mysqli_close($conn);
-
 
     $sql = "SELECT * FROM admin where number = '$number' and password = '$password'";
     $res = mysqli_query($conn,$sql);
@@ -89,14 +79,14 @@ if(isset($_POST['login'])){
                             </div>
                             <div class="loginShowPasswordDiv"><p onclick="showHideFunction()">Passwort anzeigen</p></div>
                         </label>
-                        <label for="" class="loginCheckBoxLabel">
-                            <input type="checkbox" name="" id="" class="loginCheckbox">
+                        <label for="selectLogin" class="loginCheckBoxLabel">
+                            <input type="checkbox" name="" id="selectLogin" class="loginCheckbox">
                             <span style="color: #8A8A8A;">Benutzernamen speichern</span>
                         </label>
 
                         <button type="submit" name="login">Anmelden</button>
 
-                        <div>Noch keinen Account? <span style="color: #33cccc; text-decoration: underline;">Kontakt</span></div>
+                        <div>Noch keinen Account? <span style="color: #33cccc; text-decoration: underline; cursor: pointer;">Kontakt</span></div>
                     </form>
                 </div>
             </div>

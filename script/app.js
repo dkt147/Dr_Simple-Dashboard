@@ -136,3 +136,11 @@ const allStarToggler = (s) => {
     }
   }
 };
+
+const dashboardRedirector = () => {
+  window.location.assign("./2ndpage.html")
+}
+
+const patientenRedirector = () => {
+  window.location.assign("./patienten.html")
+}

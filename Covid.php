@@ -43,6 +43,7 @@
                             <img src="./image/Dashboard/Nav Section/search.png" width="20px" height="19px" alt="">
                             <input type="text" placeholder="Suchen" name="searchproduct">
                             <select name="filterproduct">
+                                <option selected disabled>Select</option>
                                 <option value="done">Done</option>
                                 <option value="undone">UnDone</option>
                                 <option value="accepted">Accepted</option>
@@ -51,7 +52,7 @@
                             </select>
                         </section>
                         <div>
-                            <input type="submit" style="background-image: url('./image/Dashboard/Nav Section/setting.png'); border:none; background-repeat:no-repeat;background-size:100% 100%;" width="22px" height="22px" alt="" value="" name="searchbtn">
+                            <input type="submit" style="background-image: url('./image/Dashboard/Nav Section/setting.png'); border:none; background-repeat:no-repeat;background-size:70% 100%;" width="22px" height="22px" alt="" value="" name="searchbtn">
                         </div>
                     </form>
                 </div>
@@ -77,7 +78,7 @@
             <h2 class="font-weight-light">Covid Booking Dates</h2>
 
 
-            <div class="d-flex flex-row flex-nowrap" >
+            <div class="d-flex justify-content-start align-items-center flex-wrap" >
 
                     <?php
 
@@ -98,7 +99,7 @@
                                                         FROM `appointment`
                                                         JOIN patient
                                                         ON patient.number = appointment.u_id WHERE appointment.type = 'covid' and patient.name = '$name'
-                                                        order by id desc";
+                                                        order by date desc";
                                             $res = mysqli_query($conn, $query);
                                         }
                                         else{
@@ -111,7 +112,7 @@
                                                         FROM `appointment`
                                                         JOIN patient
                                                         ON patient.number = appointment.u_id WHERE appointment.type = 'covid'
-                                                        order by id desc";
+                                                        order by date desc";
 
                                             $res = mysqli_query($conn, $query);
                                         }
@@ -127,18 +128,25 @@
                                                 }
 
                                                 ?>
-                    <div class="col-md-4" style="margin-bottom: 10px;margin-left: 20px">
-                        <div class="card card-body">
-                            <?php echo $row['book_date']?>
-                        </div>
-                    </div>
+
+                                                <div class="d-flex flex-column justify-content-start covidBookings" style="width: 20%; height: 200px; border: 1px solid #33CCCC;border-radius: 5px; margin-bottom: 20px; padding: 0 0px 0px;margin-right: 5px;border-right: none; overflow-y: auto">
+                                                    <div style="position: sticky; top: 0; z-index: 10; background-color: white;" class="d-flex justify-content-center">
+                                                        <p style="font-weight: bold; font-size: 14px; color: #ffffff; background-color: #33cccc ; padding: 2px 4px; margin-bottom: 6px"><?php echo $row['book_date']?></p>
+                                                    </div>
+                                                   <div style="padding: 0 5px">
+                                                       <p style="margin: 0">jkashdhaksdksk</p><p style="margin: 0">jkashdhaksdksk</p><p style="margin: 0">jkashdhaksdksk</p>
+                                                   </div>
+                                                </div>
 
                     <?php
                      }
 
+                     $final_data = json_encode($unique_data);
 
                                         }
                                         ?>
+
+
 
 
             </div>
@@ -151,5 +159,6 @@
 </main>
 </body>
 <script src="./script/app.js"></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="logout_timer.js"></script>
 </html>

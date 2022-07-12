@@ -35,6 +35,7 @@
                         <img src="./image/Dashboard/Nav Section/search.png" width="20px" height="19px" alt="">
                         <input type="text" placeholder="Suchen" name="searchproduct">
                         <select name="filterproduct">
+                            <option selected disabled>Select</option>
                             <option value="done">Done</option>
                             <option value="undone">UnDone</option>
                             <option value="accepted">Accepted</option>
@@ -43,36 +44,66 @@
                         </select>
                     </section>
                     <div>
-                        <input type="submit" style="background-image: url('./image/Dashboard/Nav Section/setting.png'); border:none; background-repeat:no-repeat;background-size:100% 100%;" width="22px" height="22px" alt="" value="" name="searchbtn">
+                        <input type="submit" style="background-image: url('./image/Dashboard/Nav Section/setting.png'); border:none; background-repeat:no-repeat;background-size:70% 100%;" width="22px" height="22px" alt="" value="" name="searchbtn">
                     </div>
                 </form>
             </div>
             <?php include "action.php"; ?>
         </header>
         <main>
+<!--            <section class="dashboardTitleSection">-->
+<!--                <div><i class="fa-regular fa-square" onclick="allCheckToggler(this)" style="cursor: pointer;"></i>-->
+<!--                </div>-->
+<!--                <div style="margin-left: 25px;"><i class="fa-regular fa-star" onclick="allStarToggler(this)"-->
+<!--                                                   style="cursor: pointer;" id="star-all"></i></div>-->
+<!--                <div style="margin-left: 60px;">-->
+<!--                    <p>Patient</p>-->
+<!--                </div>-->
+<!--                <div style="margin-left: 140px;">-->
+<!--                    <p>Recipe</p>-->
+<!--                </div>-->
+<!--                <div class="dosesTitle">-->
+<!--                    <p>Doses</p>-->
+<!--                </div>-->
+<!--                <div style="margin-left: 120px;">-->
+<!--                    <p>Status</p>-->
+<!--                </div>-->
+<!--                <div style="margin-left: 120px;">-->
+<!--                    <p>Zeit</p>-->
+<!--                </div>-->
+<!--                <div style="margin-left: auto ; padding-left: 15px; cursor: pointer;" class="delete-btn"><img-->
+<!--                            src="./image/Dashboard/TitleSection/trash.png" alt=""></div>-->
+<!--            </section>-->
+
             <section class="dashboardTitleSection">
-                <div><i class="fa-regular fa-square" onclick="allCheckToggler(this)" style="cursor: pointer;"></i>
+                <div class="chooseTitle">
+                    <div><i class="fa-regular fa-square" onclick="allCheckToggler(this)"
+                            style="cursor: pointer;"></i>
+                    </div>
+                    <div style="margin-left: 25px;"><i class="fa-regular fa-star" onclick="allStarToggler(this)"
+                                                       style="cursor: pointer;" id="star-all"></i></div>
                 </div>
-                <div style="margin-left: 25px;"><i class="fa-regular fa-star" onclick="allStarToggler(this)"
-                                                   style="cursor: pointer;" id="star-all"></i></div>
-                <div style="margin-left: 60px;">
+                <div class="patientTitle">
                     <p>Patient</p>
                 </div>
-                <div style="margin-left: 140px;">
-                    <p>Recipe</p>
+                <div class="titleTitle titleTitle2">
+                    <p>Title</p>
                 </div>
-                <div style="margin-left: 140px;">
-                    <p>Dose</p>
+                <div class="dosesTitle">
+                    <p>Doses</p>
                 </div>
-                <div style="margin-left: 120px;">
+                <div class="statusTitle">
                     <p>Status</p>
                 </div>
-                <div style="margin-left: 120px;">
+                <div class="zeitTitle">
                     <p>Zeit</p>
                 </div>
-                <div style="margin-left: auto ; padding-left: 15px; cursor: pointer;" class="delete-btn"><img
-                            src="./image/Dashboard/TitleSection/trash.png" alt=""></div>
+                <div class="deleteTitle">
+                    <p>|</p>
+                    <img src="./image/Dashboard/TitleSection/trash.png" alt="" class="delete-btn">
+                </div>
             </section>
+
             <section class="dashboardTableContent1">
                 <table>
 
@@ -83,10 +114,163 @@
 
                     if(isset($_POST['searchbtn']) && (!empty($_POST['searchproduct']) or !empty($_POST['filterproduct'])))
                     {
-                        $name = $_POST['searchproduct'];
-                        $filter = $_POST['filterproduct'];
 
-                        $query = "SELECT 
+                        if(isset($_POST['searchproduct'])){
+                            $name = $_POST['searchproduct'];
+                        }
+                        if(isset($_POST['filterproduct'])){
+                            $filter = $_POST['filterproduct'];
+                        }
+
+
+                        if(!empty($_POST['filterproduct']) and !empty($_POST['searchproduct'])){
+                            if($_POST['filterproduct'] == 'done'){
+                                $query = "SELECT 
+                                    patient.id,
+                                    patient.name as u_name,
+                                    patient.is_active,
+                                    recipe.name as r_name,
+                                    order.id as o_id,order.power,order.u_id,order.r_id,order.is_completed,order.is_confirm, order.is_failed,    
+                                    order.date,order.is_star
+                                    FROM `order`
+                                    JOIN patient
+                                    ON patient.number = order.u_id
+                                    JOIN recipe
+                                    ON recipe.id = order.r_id WHERE  patient.name = '$name' and order.is_completed = 1
+                                    order by id desc";
+
+                            }else if($_POST['filterproduct'] == 'undone'){
+                                $query = "SELECT 
+                                    patient.id,
+                                    patient.name as u_name,
+                                    patient.is_active,
+                                    recipe.name as r_name,
+                                    order.id as o_id,order.power,order.u_id,order.r_id,order.is_completed,order.is_confirm, order.is_failed,    
+                                    order.date,order.is_star
+                                    FROM `order`
+                                    JOIN patient
+                                    ON patient.number = order.u_id
+                                    JOIN recipe
+                                    ON recipe.id = order.r_id WHERE  patient.name = '$name' and order.is_completed = 0
+                                    order by id desc";
+                            }else if($_POST['filterproduct'] == 'accepted'){
+                                $query = "SELECT 
+                                    patient.id,
+                                    patient.name as u_name,
+                                    patient.is_active,
+                                    recipe.name as r_name,
+                                    order.id as o_id,order.power,order.u_id,order.r_id,order.is_completed,order.is_confirm, order.is_failed,    
+                                    order.date,order.is_star
+                                    FROM `order`
+                                    JOIN patient
+                                    ON patient.number = order.u_id
+                                    JOIN recipe
+                                    ON recipe.id = order.r_id WHERE  patient.name = '$name' and order.is_confirm = 1
+                                    order by id desc";
+                            }else if($_POST['filterproduct'] == 'decline'){
+                                $query = "SELECT 
+                                    patient.id,
+                                    patient.name as u_name,
+                                    patient.is_active,
+                                    recipe.name as r_name,
+                                    order.id as o_id,order.power,order.u_id,order.r_id,order.is_completed,order.is_confirm, order.is_failed,    
+                                    order.date,order.is_star
+                                    FROM `order`
+                                    JOIN patient
+                                    ON patient.number = order.u_id
+                                    JOIN recipe
+                                    ON recipe.id = order.r_id WHERE  patient.name = '$name' and order.is_failed = 1
+                                    order by id desc";
+                            }else if($_POST['filterproduct'] == 'star'){
+                                $query = "SELECT 
+                                    patient.id,
+                                    patient.name as u_name,
+                                    patient.is_active,
+                                    recipe.name as r_name,
+                                    order.id as o_id,order.power,order.u_id,order.r_id,order.is_completed,order.is_confirm, order.is_failed,    
+                                    order.date,order.is_star
+                                    FROM `order`
+                                    JOIN patient
+                                    ON patient.number = order.u_id
+                                    JOIN recipe
+                                    ON recipe.id = order.r_id WHERE  patient.name = '$name' and order.is_star = 1
+                                    order by id desc";
+                            }
+                        }else if(!empty($_POST['filterproduct'])){
+                            if($_POST['filterproduct'] == 'done'){
+                                $query = "SELECT 
+                                    patient.id,
+                                    patient.name as u_name,
+                                    patient.is_active,
+                                    recipe.name as r_name,
+                                    order.id as o_id,order.power,order.u_id,order.r_id,order.is_completed,order.is_confirm, order.is_failed,    
+                                    order.date,order.is_star
+                                    FROM `order`
+                                    JOIN patient
+                                    ON patient.number = order.u_id
+                                    JOIN recipe
+                                    ON recipe.id = order.r_id WHERE order.is_completed = 1
+                                    order by id desc";
+                            }else if($_POST['filterproduct'] == 'undone'){
+                                $query = "SELECT 
+                                    patient.id,
+                                    patient.name as u_name,
+                                    patient.is_active,
+                                    recipe.name as r_name,
+                                    order.id as o_id,order.power,order.u_id,order.r_id,order.is_completed,order.is_confirm, order.is_failed,    
+                                    order.date,order.is_star
+                                    FROM `order`
+                                    JOIN patient
+                                    ON patient.number = order.u_id
+                                    JOIN recipe
+                                    ON recipe.id = order.r_id WHERE order.is_completed = 0
+                                    order by id desc";
+                            }else if($_POST['filterproduct'] == 'accepted'){
+                                $query = "SELECT 
+                                    patient.id,
+                                    patient.name as u_name,
+                                    patient.is_active,
+                                    recipe.name as r_name,
+                                    order.id as o_id,order.power,order.u_id,order.r_id,order.is_completed,order.is_confirm, order.is_failed,    
+                                    order.date,order.is_star
+                                    FROM `order`
+                                    JOIN patient
+                                    ON patient.number = order.u_id
+                                    JOIN recipe
+                                    ON recipe.id = order.r_id WHERE order.is_confirm = 1
+                                    order by id desc";
+                            }else if($_POST['filterproduct'] == 'decline'){
+                                $query = "SELECT 
+                                    patient.id,
+                                    patient.name as u_name,
+                                    patient.is_active,
+                                    recipe.name as r_name,
+                                    order.id as o_id,order.power,order.u_id,order.r_id,order.is_completed,order.is_confirm, order.is_failed,    
+                                    order.date,order.is_star
+                                    FROM `order`
+                                    JOIN patient
+                                    ON patient.number = order.u_id
+                                    JOIN recipe
+                                    ON recipe.id = order.r_id WHERE order.is_failed = 1
+                                    order by id desc";
+                            }else if($_POST['filterproduct'] == 'star'){
+                                $query = "SELECT 
+                                    patient.id,
+                                    patient.name as u_name,
+                                    patient.is_active,
+                                    recipe.name as r_name,
+                                    order.id as o_id,order.power,order.u_id,order.r_id,order.is_completed,order.is_confirm, order.is_failed,    
+                                    order.date,order.is_star
+                                    FROM `order`
+                                    JOIN patient
+                                    ON patient.number = order.u_id
+                                    JOIN recipe
+                                    ON recipe.id = order.r_id WHERE order.is_star = 1
+                                    order by id desc";
+                            }
+                        }else{
+
+                            $query = "SELECT 
                                     patient.id,
                                     patient.name as u_name,
                                     patient.is_active,
@@ -99,6 +283,9 @@
                                     JOIN recipe
                                     ON recipe.id = order.r_id WHERE patient.name = '$name'
                                     order by id desc";
+                        }
+
+
                         $res = mysqli_query($conn, $query);
                     }
                     else{
@@ -155,13 +342,14 @@
 
                                     </p>
                                 </td>
-                                <td class="table1ThirdColumn" onclick="location.href = 'subpage1.php?id=<?php echo $row['o_id'] ?>';">
+                                <td  class="table1ThirdColumn table1ThirdColumn2" onclick="location.href = 'subpage1.php?id=<?php echo $row['o_id'] ?>';">
                                     <p><?php echo $row['r_name'] ?></p>
                                 </td>
-                                <td class="table1SixthColumn" onclick="location.href = 'subpage1.php?id=<?php echo $row['o_id'] ?>';">
+
+                                <td class="tableDosesColumn" onclick="location.href = 'subpage1.php?id=<?php echo $row['o_id'] ?>';">
                                     <p><?php echo $row['power'] ?></p>
                                 </td>
-                                <td class="table1ForthColumn" onclick="location.href = 'subpage1.php?id=<?php echo $row['o_id'] ?>';">
+                                <td class="table1ForthColumn" >
 
 
                                     <?php
@@ -210,6 +398,8 @@
 </body>
 <script src="./script/app.js"></script>
 <script type="text/javascript" src="js/jquery.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="logout_timer.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
 

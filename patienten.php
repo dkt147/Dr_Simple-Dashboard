@@ -1,3 +1,5 @@
+
+<?php $page="patienten"; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,6 +45,7 @@
                         <img src="./image/Dashboard/Nav Section/search.png" width="20px" height="19px" alt="">
                         <input type="text" placeholder="Suchen" name="searchproduct">
                         <select name="filterproduct">
+                            <option selected disabled>Select</option>
                             <option value="done">Done</option>
                             <option value="undone">UnDone</option>
                             <option value="accepted">Accepted</option>
@@ -51,7 +54,7 @@
                         </select>
                     </section>
                     <div>
-                        <input type="submit" style="background-image: url('./image/Dashboard/Nav Section/setting.png'); border:none; background-repeat:no-repeat;background-size:100% 100%;" width="22px" height="22px" alt="" value="" name="searchbtn">
+                        <input type="submit" style="background-image: url('./image/Dashboard/Nav Section/setting.png'); border:none; background-repeat:no-repeat;background-size:70% 100%;" width="22px" height="22px" alt="" value="" name="searchbtn">
                     </div>
                 </form>
             </div>
@@ -80,7 +83,7 @@
                             <p>Telefonnummer</p>
 
                         </td>
-                        <td>
+                        <td class="lastParaPatient">
                             <p>Angemeldet seit</p>
 
                         </td>
@@ -140,22 +143,23 @@ if($row['is_active'] == 1){
                             <p><?php echo $row['number'];?></p>
 
                         </td>
-                        <td class="table2FifthColumn">
-                            <p><?php echo $row['date'];?></p>
+                        <td class=" table2FifthColumn">
+                            <p class="lastParaPatient"><?php echo $row['date'];?></p>
 
                         </td>
-                        <td class="mytableSeparator" style="margin-left: 37px">
-                          <?php
-                          if($row['is_active'] == 1){
-                            ?>
-                            <img src="./image/Dashboard/TitleSection/verified-badge.png" alt="">
+                        <td class="tableSeparator hiddenElement"> | </td>
+                        <td class="table2IconSect">
                             <?php
+                            if($row['is_active'] == 1){
+                                ?>
+                                <img src="./image/Dashboard/TitleSection/verified-badge.png" alt="">
+                                <?php
                             }if($row['is_block'] == 1){
                                 ?>
-                               <img src="./image/Dashboard/UserTitleSection/block.png" alt="" >
+                                <img src="./image/Dashboard/UserTitleSection/block.png" alt="" >
                                 <?php
                             }
-?>
+                            ?>
                         </td>
 
                     </tr>
@@ -174,6 +178,7 @@ if($row['is_active'] == 1){
 </body>
 <script src="./script/app.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="logout_timer.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
 
@@ -222,20 +227,17 @@ if($row['is_active'] == 1){
             if(id.length === 0){
                 alert("Please Select atleast one star.");
             }else{
-                if(confirm("Do you really want to block these users ?")){
                     $.ajax({
                         url : "block__user.php",
                         type : "POST",
                         data : {id : id},
                         success : function(data){
                             if(data == 1){
-                                alert("Blocked User.");
                                 location.reload();
                             }else{
                             }
                         }
                     });
-                }
             }
         });
 
@@ -257,7 +259,6 @@ if($row['is_active'] == 1){
                 if (person == null || person == "") {
 
                 } else {
-                    if(confirm("Do you really want to block these users ?")){
                         $.ajax({
                             url : "reply__user.php",
                             type : "POST",
@@ -270,7 +271,6 @@ if($row['is_active'] == 1){
                                 }
                             }
                         });
-                    }
                 }
 
             }
@@ -313,7 +313,11 @@ if($row['is_active'] == 1){
         //     // }
         //
         // });
-
+        // $(document).ready(function(){
+        //     $("p").mouseover(function(){
+        //         alert('move')
+        //     });
+        // });
     });
 </script>
 </html>

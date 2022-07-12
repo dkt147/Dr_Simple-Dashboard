@@ -39,45 +39,24 @@
             <h2>Notifications</h2>
             <div>
 
-
-
             </div>
-            <?php include "action.php"; ?>
         </header>
 
         <main>
             <section class="dashboardTableContent1">
 
-                <?php
 
-                include 'config.php';
-
-                if(isset($_POST['send'])){
-
-                    $message = $_POST['message'];
-                    $date = date('Y-m-d');
-
-                    $sql = "INSERT INTO notification_history(type,message,status,created_at,is_seen) VALUES('general','$message',10,'$date',0)";
-                    $res = mysqli_query($conn,$sql);
-                    if($res){
-                        echo "<script>alert('Notification Send')</script>";
-                    }else{
-                        echo "<script>alert('Notification Failed')</script>";
-                    }
-                }
-                ?>
                 <form action="notification.php" method="post">
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Message</label>
-                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Your message here" name="message">
+                        <textarea type="text-area" class="form-control" id="message" placeholder="Your message here" name="message" rows="4" cols="50"></textarea>
                     </div>
 
-
                     <div class="form-group">
-                        <input type="submit" name="send" class="btn btn-primary" value="Send Notification">
+                        <input type="button" name="send" class="btn" value="Nachricht senden" id="form-submit" style="width: 220px;background-color: #33CCCC;color: white">
                     </div><br><br><br>
                     <div class="form-group">
-                        <a type="submit"  class="btn btn-warning" href="patienten.php"><< back</a>
+                        <a type="submit"  class="btn btn-warning" href="<?php echo $_GET['redirect']?>.php"><< back</a>
                     </div>
                 </form>
             </section>
@@ -87,34 +66,28 @@
 </body>
 <script src="./script/app.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="logout_timer.js"></script>
 <script>
     $(document).ready(function(){
-        $("#umbrella").click(function(){
-            console.log('umbrella');
-            //$.ajax({
-            //    type: "POST",
-            //    url: 'accept_referal.php',
-            //    data: {'r_id': <?php //echo $row['r_id']?>//,},
-            //    success: function(response){
-            //        console.log('request sent')
-            //        location.reload();
-            //    }
-            //});
+
+        $("#form-submit").click(function(){
+            var message = document.getElementById("message").value;
+            $.ajax({
+                type: "POST",
+                url: 'send_notification.php',
+                data: {'message': message},
+                success: function(response){
+                    if(response == 1){
+                        alert('Notification Sent')
+                        document.getElementById("message").value = "";
+                    }else{
+                        alert('Notification Sent Failed')
+                        document.getElementById("message").value = "";
+                    }
+                }
+            });
         });
 
-
-        $("#megaphone").click(function(){
-            console.log('megaphone');
-            //$.ajax({
-            //    type: "POST",
-            //    url: 'accept_referal.php',
-            //    data: {'r_id': <?php //echo $row['r_id']?>//,},
-            //    success: function(response){
-            //        console.log('request sent')
-            //        location.reload();
-            //    }
-            //});
-        });
     });
 </script>
 </html>

@@ -29,7 +29,7 @@
         <img src="./image/logo.png" alt="">
 
         <div style="color: white;">
-            <p><b>Dashboard</b> | Vacation</p>
+            <p><a href="All.php" style="text-decoration: none;color:white"><b>Dashboard</b></a> | <a href="patienten.php" style="text-decoration: none;color:white">Patienten</p></a>
         </div>
     </section>
 
@@ -42,49 +42,31 @@
 
 
             </div>
-            <?php include "action.php"; ?>
         </header>
 
         <main>
             <section class="dashboardTableContent1">
 
-                <?php
 
-                include 'config.php';
-
-                if(isset($_POST['send'])){
-
-                    $start_date = $_POST['start_date'];
-                    $end_date = $_POST['end_date'];
-
-                    $sql = "UPDATE vacation SET start_date = '$start_date', end_date = '$end_date'";
-                    $res = mysqli_query($conn,$sql);
-                    if($res){
-                        echo "<script>alert('Vacation Notification Send')</script>";
-                    }else{
-                        echo "<script>alert('Vacation Notification Failed')</script>";
-                    }
-                }
-                ?>
                 <form action="vacation.php" method="post">
                     <div class="form-group">
                         <div class="form-group">
                             <label for="exampleFormControlInput1">Start Date</label>
-                            <input type="date" class="form-control" id="exampleFormControlInput1"  name="start_date">
+                            <input type="date" class="form-control start_date" id="start_date"  name="start_date" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="form-group">
                             <label for="exampleFormControlInput1">End Date</label>
-                            <input type="date" class="form-control" id="exampleFormControlInput1"  name="end_date">
+                            <input type="date" class="form-control end_date" id="end_date"  name="end_date" required>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <input type="submit" name="send" class="btn btn-primary" value="Send Notification">
+                        <input type="button" name="send" class="btn " id="submit-form" value="Einstellen" style="background-color: #33CCCC;color: white;width: 120px" >
                     </div><br><br><br>
                     <div class="form-group">
-                        <a type="submit"  class="btn btn-warning" href="patienten.php"><< back</a>
+                        <a type="submit" class="btn btn-warning" href="<?php echo $_GET['redirect']?>.php" ><< back</a>
                     </div>
                 </form>
             </section>
@@ -94,34 +76,42 @@
 </body>
 <script src="./script/app.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="logout_timer.js"></script>
 <script>
     $(document).ready(function(){
-        $("#umbrella").click(function(){
-            console.log('umbrella');
-            //$.ajax({
-            //    type: "POST",
-            //    url: 'accept_referal.php',
-            //    data: {'r_id': <?php //echo $row['r_id']?>//,},
-            //    success: function(response){
-            //        console.log('request sent')
-            //        location.reload();
-            //    }
-            //});
+        $("#submit-form").click(function(){
+            var startDate = document.getElementById("start_date").value;
+            var endDate = document.getElementById("end_date").value;
+            console.log(startDate);
+            console.log(endDate);
+            $.ajax({
+                type: "POST",
+                url: 'send_vacation.php',
+                data: {'start_date': startDate,'end_date': endDate},
+                success: function(response){
+                    if(response == 1){
+                       alert('App will be blocked')
+                        document.getElementById("start_date").value = "";
+                        document.getElementById("end_date").value = "";
+                    }else{
+                        alert('App block failed')
+                        document.getElementById("start_date").value = "";
+                        document.getElementById("end_date").value = "";
+                    }
+                }
+            });
+        });
+            $("#end_date").change(function() {
+            var startDate = document.getElementById("start_date").value;
+            var endDate = document.getElementById("end_date").value;
+
+            if ((Date.parse(endDate) <= Date.parse(startDate))) {
+            alert("End date should be greater than Start date");
+            document.getElementById("end_date").value = "";
+        }
         });
 
 
-        $("#megaphone").click(function(){
-            console.log('megaphone');
-            //$.ajax({
-            //    type: "POST",
-            //    url: 'accept_referal.php',
-            //    data: {'r_id': <?php //echo $row['r_id']?>//,},
-            //    success: function(response){
-            //        console.log('request sent')
-            //        location.reload();
-            //    }
-            //});
-        });
     });
 </script>
 </html>

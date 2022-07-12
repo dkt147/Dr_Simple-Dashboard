@@ -53,7 +53,7 @@
   color: #2e303d;
   font-size: 24px;
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 60px;
 }
 .loginForm > label {
   display: inline-block;
@@ -73,7 +73,7 @@
 }
 .loginInputDiv input {
   border: none;
-  font-size: 17px;
+  font-size: 16px;
   width: 100%;
   margin-left: 15px;
   outline: none;
@@ -96,9 +96,11 @@
   width: 18px !important;
   height: 18px !important;
   margin-right: 5px;
+  cursor: pointer;
 }
 .loginCheckBoxLabel > span {
   vertical-align: top;
+  cursor: pointer;
 }
 .loginForm button {
   background-color: #33cccc;
@@ -108,6 +110,8 @@
   border: none;
   padding: 16px;
   font-size: 18px;
+  cursor: pointer;
+  margin-top: 30px;
 }
 .loginForm > div {
   text-align: center;
@@ -161,12 +165,14 @@
 .dashboardIconSection img {
   width: 35px;
   height: 35px;
+  cursor: pointer;
 }
 .dashboardIconSection p {
   color: white;
   margin-left: 20px;
   font-weight: 400;
   opacity: 80%;
+  cursor: pointer;
 }
 .dashboardIconSection .activeLink {
   opacity: 1;
@@ -176,7 +182,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* margin-bottom: 30px; */
 }
 .dashboardOfSubpage .dashboardNavSection {
   margin-bottom: 30px;
@@ -196,6 +201,7 @@
   height: 25px;
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 .dashboardNavSection > div {
   display: flex;
@@ -229,6 +235,15 @@
 .dashboardNavSection input::placeholder {
   color: #9da1a7;
 }
+.dashboardNavSection select {
+  border: none;
+  border-bottom: 1px solid #e3e4e5;
+  background: transparent;
+  font-size: 12px;
+  color: #555;
+  width: 80px;
+  outline: none;
+}
 .dashboardNavSection > div div {
   background-color: #f9fafc;
   margin-left: 26px;
@@ -255,8 +270,37 @@
 }
 .dashboardTitleSection > div {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+}
+.dashboardTitleSection .chooseTitle {
+  width: 11.75%;
+}
+.dashboardTitleSection .patientTitle {
+  width: 20%;
+}
+.dashboardTitleSection .titleTitle {
+  width: 40.5%;
+}
+.dashboardTitleSection .titleTitle2 {
+  width: 22%;
+}
+.dashboardTitleSection .dosesTitle {
+  width: 18%;
+}
+.dashboardTitleSection .statusTitle {
+  width: 16%;
+}
+.dashboardTitleSection .deleteTitle {
+  margin-left: auto;
+  padding-left: 2%;
+  justify-content: space-between;
+  width: 8%;
+}
+.dashboardTitleSection .deleteTitle > p {
+  /* margin-right: 30px; */
+  color: grey;
+  /* margin-right:  !important; */
 }
 .dashboardTitleSection > div > img,
 .dashboardTableContent1 img {
@@ -296,8 +340,12 @@
   align-items: center;
   color: #273240;
 }
+.dashboardTableContent1 td {
+  cursor: pointer !important;
+}
 .table1FirstColumn {
-  width: 135px;
+  /* width: 135px; */
+  width: 12.5%;
   padding-left: 15px !important;
 }
 .table1FirstColumn div {
@@ -308,7 +356,8 @@
   margin-right: 25px;
 }
 .table1SecondColumn {
-  width: 205px;
+  /* width: 205px; */
+  width: 19.5%;
 }
 .dashboardTitleSection i[class~="fa-square"],
 .dashboardTitleSection i[class~="fa-square-check"],
@@ -335,17 +384,23 @@
   margin-left: 4px;
 }
 .table1ThirdColumn {
-  width: 350px;
-  padding-right: 25px !important;
+  /* width: 380px; */
+  width: 35.75%;
+  /* padding-right: 30px !important; */
+  padding-right: 3.5% !important;
+}
+.table1ThirdColumn2 {
+  width: 21.5%;
+}
+.tableDosesColumn {
+  width: 14%;
 }
 .table1ForthColumn {
-  width: 225px;
-}
-table1SixthColumn > p {
- padding-right: 200px;
+  /* width: 200px; */
+  width: 19.25%;
 }
 .table1ForthColumn > div {
-  position: relative;
+  /* position: relative; */
   width: 120px;
   border-radius: 80px;
   padding: 6px 10px;
@@ -418,7 +473,7 @@ table1SixthColumn > p {
   margin-right: 20px;
 }
 .table2 p {
-  width: 210px;
+  width: 200px;
   justify-content: flex-start;
 }
 .table2FirstColumn div {
@@ -431,13 +486,17 @@ table1SixthColumn > p {
   color: #404852;
   opacity: 0.5;
 }
+.lastParaPatient {
+  width: 120px !important;
+}
 .tableSeparator {
   color: #273240;
   opacity: 0.2;
   font-weight: lighter;
+  margin-left: auto;
 }
 .table2IconSect {
-  width: 100%;
+  width: 120px;
   justify-content: space-around;
   padding: 30px;
 }
@@ -639,6 +698,9 @@ table1SixthColumn > p {
   font-size: 18px;
   color: #33cccc;
 }
+.table3HeaderIcons img {
+  cursor: pointer;
+}
 .table3Content {
   padding: 5px 25px 0px;
   border-bottom: 1px solid #2732401a !important;
@@ -758,21 +820,34 @@ table1SixthColumn > p {
   vertical-align: middle;
 }
 
+.activeDashboard {
+  font-weight: bold;
+}
+
+.dashboardsChangerDiv {
+  color: white;
+  cursor: pointer;
+}
+
+.rowHandCursor{
+  cursor: pointer;
+}
 /* ///// Styling Scrollbar ///// */
 
-.dashboardAbsoluteSection::-webkit-scrollbar-track {
+.dashboardAbsoluteSection::-webkit-scrollbar-track, .covidBookings::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   border-radius: 25px;
   background-color: #f5f5f5;
 }
 
-.dashboardAbsoluteSection::-webkit-scrollbar {
+
+.dashboardAbsoluteSection::-webkit-scrollbar,.covidBookings::-webkit-scrollbar {
   width: 8px;
   background-color: #33cccc;
 }
 
-.dashboardAbsoluteSection::-webkit-scrollbar-thumb {
+.dashboardAbsoluteSection::-webkit-scrollbar-thumb,.covidBookings::-webkit-scrollbar-thumb {
   border-radius: 10px;
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  background-color: #555;
+  background-color: #33CCCC;
 }

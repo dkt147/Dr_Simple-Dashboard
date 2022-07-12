@@ -36,6 +36,7 @@
                         <img src="./image/Dashboard/Nav Section/search.png" width="20px" height="19px" alt="">
                         <input type="text" placeholder="Suchen" name="searchproduct">
                         <select name="filterproduct">
+                            <option selected disabled>Select</option>
                             <option value="done">Done</option>
                             <option value="undone">UnDone</option>
                             <option value="accepted">Accepted</option>
@@ -44,32 +45,60 @@
                         </select>
                     </section>
                     <div>
-                        <input type="submit" style="background-image: url('./image/Dashboard/Nav Section/setting.png'); border:none; background-repeat:no-repeat;background-size:100% 100%;" width="22px" height="22px" alt="" value="" name="searchbtn">
+                        <input type="submit" style="background-image: url('./image/Dashboard/Nav Section/setting.png'); border:none; background-repeat:no-repeat;background-size:70% 100%;" width="22px" height="22px" alt="" value="" name="searchbtn">
                     </div>
                 </form>
             </div>
+
+
             <?php include "action.php"; ?>
         </header>
         <main>
+<!--            <section class="dashboardTitleSection">-->
+<!--                <div><i class="fa-regular fa-square" onclick="allCheckToggler(this)" style="cursor: pointer;"></i>-->
+<!--                </div>-->
+<!--                <div style="margin-left: 25px;"><i class="fa-regular fa-star" onclick="allStarToggler(this)"-->
+<!--                                                   style="cursor: pointer;" id="star-all"></i></div>-->
+<!--                <div style="margin-left: 60px;">-->
+<!--                    <p>Patient</p>-->
+<!--                </div>-->
+<!--                <div style="margin-left: 160px;">-->
+<!--                    <p>Title</p>-->
+<!--                </div>-->
+<!--                <div style="margin-left: 320px;">-->
+<!--                    <p>Status</p>-->
+<!--                </div>-->
+<!--                <div style="margin-left: 150px;">-->
+<!--                    <p>Zeit</p>-->
+<!--                </div>-->
+<!--                <div style="margin-left: auto ; padding-left: 25px; cursor: pointer;" class="delete-btn"><img-->
+<!--                            src="./image/Dashboard/TitleSection/trash.png" alt=""></div>-->
+<!--            </section>-->
+
             <section class="dashboardTitleSection">
-                <div><i class="fa-regular fa-square" onclick="allCheckToggler(this)" style="cursor: pointer;"></i>
+                <div class="chooseTitle">
+                    <div><i class="fa-regular fa-square" onclick="allCheckToggler(this)"
+                            style="cursor: pointer;"></i>
+                    </div>
+                    <div style="margin-left: 25px;"><i class="fa-regular fa-star" onclick="allStarToggler(this)"
+                                                       style="cursor: pointer;" id="star-all"></i></div>
                 </div>
-                <div style="margin-left: 25px;"><i class="fa-regular fa-star" onclick="allStarToggler(this)"
-                                                   style="cursor: pointer;" id="star-all"></i></div>
-                <div style="margin-left: 60px;">
+                <div class="patientTitle">
                     <p>Patient</p>
                 </div>
-                <div style="margin-left: 160px;">
+                <div class="titleTitle">
                     <p>Title</p>
                 </div>
-                <div style="margin-left: 320px;">
+                <div class="statusTitle">
                     <p>Status</p>
                 </div>
-                <div style="margin-left: 150px;">
+                <div class="zeitTitle">
                     <p>Zeit</p>
                 </div>
-                <div style="margin-left: auto ; padding-left: 25px; cursor: pointer;" class="delete-btn"><img
-                            src="./image/Dashboard/TitleSection/trash.png" alt=""></div>
+                <div class="deleteTitle">
+                    <p>|</p>
+                    <img src="./image/Dashboard/TitleSection/trash.png" alt="" class="delete-btn">
+                </div>
             </section>
             <section class="dashboardTableContent1">
                 <table>
@@ -81,8 +110,130 @@
 
                     if(isset($_POST['searchbtn']) && (!empty($_POST['searchproduct']) or !empty($_POST['filterproduct'])))
                     {
-                        $name = $_POST['searchproduct'];
-                        $filter = $_POST['filterproduct'];
+
+                        if(isset($_POST['searchproduct'])){
+                            $name = $_POST['searchproduct'];
+                        }
+                        if(isset($_POST['filterproduct'])){
+                            $filter = $_POST['filterproduct'];
+                        }
+
+
+                        if(!empty($_POST['filterproduct']) and !empty($_POST['searchproduct'])){
+                            if($_POST['filterproduct'] == 'done'){
+                                $query = "SELECT 
+                                    patient.id,
+                                    patient.name,
+                                    patient.is_active,
+                                    appointment.id as a_id,appointment.type,appointment.date,appointment.is_completed,appointment.is_confirm,   appointment.is_failed, 
+                                    appointment.book_date,appointment.reason,appointment.d_id,appointment.is_star
+                                    FROM `appointment`
+                                    JOIN patient
+                                    ON patient.number = appointment.u_id WHERE patient.name = '$name' and appointment.type != 'covid' and appointment.is_completed = 1
+                                    order by id desc";
+                            }else if($_POST['filterproduct'] == 'undone'){
+                                    $query = "SELECT 
+                                    patient.id,
+                                    patient.name,
+                                    patient.is_active,
+                                    appointment.id as a_id,appointment.type,appointment.date,appointment.is_completed,appointment.is_confirm,   appointment.is_failed, 
+                                    appointment.book_date,appointment.reason,appointment.d_id,appointment.is_star
+                                    FROM `appointment`
+                                    JOIN patient
+                                    ON patient.number = appointment.u_id WHERE patient.name = '$name' and appointment.type != 'covid' and appointment.is_completed = 0
+                                    order by id desc";
+                                }else if($_POST['filterproduct'] == 'accepted'){
+                                    $query = "SELECT 
+                                    patient.id,
+                                    patient.name,
+                                    patient.is_active,
+                                    appointment.id as a_id,appointment.type,appointment.date,appointment.is_completed,appointment.is_confirm,   appointment.is_failed, 
+                                    appointment.book_date,appointment.reason,appointment.d_id,appointment.is_star
+                                    FROM `appointment`
+                                    JOIN patient
+                                    ON patient.number = appointment.u_id WHERE patient.name = '$name' and appointment.type != 'covid' and appointment.is_confirm = 1
+                                    order by id desc";
+                                }else if($_POST['filterproduct'] == 'decline'){
+                                    $query = "SELECT 
+                                    patient.id,
+                                    patient.name,
+                                    patient.is_active,
+                                    appointment.id as a_id,appointment.type,appointment.date,appointment.is_completed,appointment.is_confirm,   appointment.is_failed, 
+                                    appointment.book_date,appointment.reason,appointment.d_id,appointment.is_star
+                                    FROM `appointment`
+                                    JOIN patient
+                                    ON patient.number = appointment.u_id WHERE patient.name = '$name' and appointment.type != 'covid' and appointment.is_failed = 1
+                                    order by id desc";
+                                }else if($_POST['filterproduct'] == 'star'){
+                                    $query = "SELECT 
+                                    patient.id,
+                                    patient.name,
+                                    patient.is_active,
+                                    appointment.id as a_id,appointment.type,appointment.date,appointment.is_completed,appointment.is_confirm,   appointment.is_failed, 
+                                    appointment.book_date,appointment.reason,appointment.d_id,appointment.is_star
+                                    FROM `appointment`
+                                    JOIN patient
+                                    ON patient.number = appointment.u_id WHERE patient.name = '$name' and appointment.type != 'covid' and appointment.is_star = 1
+                                    order by id desc";
+                                }
+                            }else if(!empty($_POST['filterproduct'])){
+                            if($_POST['filterproduct'] == 'done'){
+                                $query = "SELECT 
+                                    patient.id,
+                                    patient.name,
+                                    patient.is_active,
+                                    appointment.id as a_id,appointment.type,appointment.date,appointment.is_completed,appointment.is_confirm,   appointment.is_failed, 
+                                    appointment.book_date,appointment.reason,appointment.d_id,appointment.is_star
+                                    FROM `appointment`
+                                    JOIN patient
+                                    ON patient.number = appointment.u_id WHERE appointment.type != 'covid' and appointment.is_completed = 1
+                                    order by id desc";
+                            }else if($_POST['filterproduct'] == 'undone'){
+                                    $query = "SELECT 
+                                    patient.id,
+                                    patient.name,
+                                    patient.is_active,
+                                    appointment.id as a_id,appointment.type,appointment.date,appointment.is_completed,appointment.is_confirm,   appointment.is_failed, 
+                                    appointment.book_date,appointment.reason,appointment.d_id,appointment.is_star
+                                    FROM `appointment`
+                                    JOIN patient
+                                    ON patient.number = appointment.u_id WHERE appointment.type != 'covid' and appointment.is_completed = 0
+                                    order by id desc";
+                                }else if($_POST['filterproduct'] == 'accepted'){
+                                    $query = "SELECT 
+                                    patient.id,
+                                    patient.name,
+                                    patient.is_active,
+                                    appointment.id as a_id,appointment.type,appointment.date,appointment.is_completed,appointment.is_confirm,   appointment.is_failed, 
+                                    appointment.book_date,appointment.reason,appointment.d_id,appointment.is_star
+                                    FROM `appointment`
+                                    JOIN patient
+                                    ON patient.number = appointment.u_id WHERE appointment.type != 'covid' and appointment.is_confirm = 1
+                                    order by id desc";
+                                }else if($_POST['filterproduct'] == 'decline'){
+                                    $query = "SELECT 
+                                    patient.id,
+                                    patient.name,
+                                    patient.is_active,
+                                    appointment.id as a_id,appointment.type,appointment.date,appointment.is_completed,appointment.is_confirm,   appointment.is_failed, 
+                                    appointment.book_date,appointment.reason,appointment.d_id,appointment.is_star
+                                    FROM `appointment`
+                                    JOIN patient
+                                    ON patient.number = appointment.u_id WHERE appointment.type != 'covid' and appointment.is_failed = 1
+                                    order by id desc";
+                                }else if($_POST['filterproduct'] == 'star'){
+                                    $query = "SELECT 
+                                    patient.id,
+                                    patient.name,
+                                    patient.is_active,
+                                    appointment.id as a_id,appointment.type,appointment.date,appointment.is_completed,appointment.is_confirm,   appointment.is_failed, 
+                                    appointment.book_date,appointment.reason,appointment.d_id,appointment.is_star
+                                    FROM `appointment`
+                                    JOIN patient
+                                    ON patient.number = appointment.u_id WHERE appointment.type != 'covid' and appointment.is_star = 1
+                                    order by id desc";
+                                }
+                            }else{
 
 
                         $query = "SELECT 
@@ -95,6 +246,8 @@
                                     JOIN patient
                                     ON patient.number = appointment.u_id WHERE patient.name = '$name' and appointment.type != 'covid'
                                     order by id desc";
+                            }
+
                         $res = mysqli_query($conn, $query);
                     }
                     else{
@@ -218,6 +371,7 @@
 </body>
 <script type="text/javascript" src="js/jquery.js"></script>
 <script src="./script/app.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="logout_timer.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
