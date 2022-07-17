@@ -303,7 +303,20 @@
                             </p>
                         </td>
                         <td class="table1ThirdColumn">
-                            <p><?php echo $row['reason'] ?></p>
+                            <p><?php
+
+                                if($row['type'] == 'consult'){
+                                    echo "Akute Sprechstunde Anfrage";
+                                }elseif ($row['type'] == 'regular'){
+                                    echo "Regulärer Termin Anfrage";
+                                }else{
+                                    echo "Rezept Bestellung";
+                                }
+                                 $row['reason']
+
+
+
+                                ?></p>
                         </td>
                         <td class="table1ForthColumn">
 

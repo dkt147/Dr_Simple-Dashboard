@@ -279,7 +279,7 @@
                                     </p>
                                 </td>
                                 <td class="table1ThirdColumn" onclick="location.href = 'subpage2.php?id=<?php echo $row['a_id'] ?>';">
-                                    <p><?php echo $row['reason'] ?></p>
+                                    <p><?php echo "Akute Sprechstunde Anfrage" ?></p>
                                 </td>
                                 <td class="table1ForthColumn" onclick="location.href = 'subpage2.php?id=<?php echo $row['a_id'] ?>';">
                                     <?php

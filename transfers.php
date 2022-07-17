@@ -322,7 +322,7 @@
                                     </p>
                                 </td>
                                 <td class="table1ThirdColumn" onclick="location.href = 'subpage6.php?id=<?php echo $row['r_id'] ?>';">
-                                    <p><?php echo $row['c_name'] ?></p>
+                                    <p><?php echo "Überweisung Bestellung" ?></p>
                                 </td>
                                 <td class="table1ForthColumn" onclick="location.href = 'subpage6.php?id=<?php echo $row['r_id'] ?>';">
                                     <?php

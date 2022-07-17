@@ -503,6 +503,10 @@
 .table2IconSect div {
   margin: 0;
 }
+
+.disable_date{
+  opacity: 0.4;
+}
 .table2Content {
   border-bottom: 1px solid #2732401a;
   display: flex;

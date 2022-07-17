@@ -85,6 +85,7 @@
                                         //Stablishing Connection...
                                         include 'config.php';
 
+                    $all_appointments = [];
                     if(isset($_POST['searchbtn']) && (!empty($_POST['searchproduct']) or !empty($_POST['filterproduct'])))
                     {
                         $name = $_POST['searchproduct'];
@@ -103,17 +104,7 @@
                                             $res = mysqli_query($conn, $query);
                                         }
                                         else{
-                                            $query = "SELECT
-                                                        patient.id,
-                                                        patient.name,
-                                                        patient.is_active,
-                                                        appointment.type,appointment.date,appointment.is_completed,appointment.is_confirm,
-                                                        appointment.book_date,appointment.reason,appointment.d_id
-                                                        FROM `appointment`
-                                                        JOIN patient
-                                                        ON patient.number = appointment.u_id WHERE appointment.type = 'covid'
-                                                        order by date desc";
-
+                                            $query = "SELECT * FROM schedule group by date order by date asc";
                                             $res = mysqli_query($conn, $query);
                                         }
 
@@ -121,27 +112,119 @@
                                             $a=array();
                                             $unique_data = array();
                                             while ($row = mysqli_fetch_assoc($res)) {
-                                                if(in_array($row['book_date'], $unique_data)){
-                                                $unique_data[$row['book_date']][]=$row;
-                                            }else{
-                                                    $unique_data[$row['book_date']][]=$row;
+                                                $date = $row['date'];
+                                                if($row['date'] < date("Y-m-d")){?>
+
+                                                    <div class="d-flex flex-column justify-content-start covidBookings disable_date" style="width: 20%; height: 200px; border: 1px solid grey;border-radius: 5px; margin-bottom: 20px; padding: 0 0px 0px;margin-right: 5px;border-right: none; overflow-y: auto">
+                                                        <div style="position: sticky; top: 0; z-index: 10; background-color: white;" class="d-flex justify-content-center">
+                                                            <p style="font-weight: bold; font-size: 14px; color: #ffffff; background-color: grey ; padding: 2px 4px; margin-bottom: 6px"><?php echo $row['date']?></p>
+                                                        </div>
+                                                        <div style="padding: 0 5px">
+                                                            <?php
+                                                            $query1 = "SELECT * FROM schedule where  date = '$date'";
+                                                            $res1 = mysqli_query($conn, $query1);
+
+                                                            if (mysqli_num_rows($res1) > 0) {
+                                                                while ($row1 = mysqli_fetch_assoc($res1)) {
+
+
+                                                                    $query5 = "SELECT appointment.u_id,appointment.book_date,appointment.type,appointment.book_slot,patient.name,patient.number  FROM appointment JOIN patient ON patient.number = appointment.u_id where appointment.book_date = '$date' and appointment.type = 'covid'";
+                                                                    $res5 = mysqli_query($conn, $query5);
+
+                                                                    if (mysqli_num_rows($res5) > 0) {
+                                                                        while ($row5 = mysqli_fetch_assoc($res5)) {
+                                                                            $all_appointments[$row5['book_slot']] = $row5['name'];
+//                                                                   $all_appointments[] = $row5['book_slot'];
+                                                                        }
+                                                                    }
+
+                                                                    ?>
+                                                                    <p style="margin: 0;font-size: 12px">
+                                                                        <?php
+                                                                        if(!empty($all_appointments[$row1['slot']])){
+                                                                            ?><i class="fa-solid fa-circle" style="color: grey;font-size: 9px;"></i><?php echo " ".array_search ($all_appointments[$row1['slot']], $all_appointments)." ".$all_appointments[$row1['slot']];
+                                                                        }
+
+                                                                        ?>
+                                                                    </p>
+                                                                    <?php
+                                                                }
+                                                            }?>
+                                                        </div>
+                                                    </div>
+                                                <?php
+                                                }else{
+                                                    ?>
+
+                                                    <div class="d-flex flex-column justify-content-start covidBookings " style="width: 20%; height: 200px; border: 1px solid #33CCCC;border-radius: 5px; margin-bottom: 20px; padding: 0 0px 0px;margin-right: 5px;border-right: none; overflow-y: auto">
+                                                        <div style="position: sticky; top: 0; z-index: 10; background-color: white;" class="d-flex justify-content-center">
+                                                            <p style="font-weight: bold; font-size: 14px; color: #ffffff; background-color: #33cccc ; padding: 2px 4px; margin-bottom: 6px"><?php echo $row['date']?></p>
+                                                        </div>
+                                                        <div style="padding: 0 5px">
+                                                            <?php
+                                                            $query1 = "SELECT * FROM schedule where  date = '$date'";
+                                                            $res1 = mysqli_query($conn, $query1);
+
+                                                            if (mysqli_num_rows($res1) > 0) {
+                                                                while ($row1 = mysqli_fetch_assoc($res1)) {
+
+
+                                                                    $query5 = "SELECT appointment.u_id,appointment.book_date,appointment.type,appointment.book_slot,patient.name,patient.number  FROM appointment JOIN patient ON patient.number = appointment.u_id where appointment.book_date = '$date' and appointment.type = 'covid'";
+                                                                    $res5 = mysqli_query($conn, $query5);
+
+                                                                    if (mysqli_num_rows($res5) > 0) {
+                                                                        while ($row5 = mysqli_fetch_assoc($res5)) {
+                                                                            $all_appointments[$row5['book_slot']] = $row5['name'];
+//                                                                   $all_appointments[] = $row5['book_slot'];
+                                                                        }
+                                                                    }
+
+                                                                    ?>
+                                                                    <p style="margin: 0;font-size: 12px">
+                                                                        <?php
+                                                                        if(!empty($all_appointments[$row1['slot']])){
+                                                                            ?><i class="fa-solid fa-circle" style="color: #33CCCC;font-size: 9px;"></i><?php echo " ".array_search ($all_appointments[$row1['slot']], $all_appointments)." ".$all_appointments[$row1['slot']];
+                                                                        }else{
+                                                                            ?><i class="fa-solid fa-circle" style="color: #f33130;font-size: 9px;"></i><?php echo " ".$row1['slot'];?>&nbsp
+                                                                            <select name="user_appointed" class="user_appointed" style="border: 1px solid white">
+                                                                                <option selected disabled>Select</option>
+
+                                                                                <?php
+                                                                                $query6 = "SELECT * FROM patient";
+                                                                                $res6 = mysqli_query($conn, $query6);
+
+                                                                                if (mysqli_num_rows($res6) > 0) {
+                                                                                    while ($row6 = mysqli_fetch_assoc($res6)) {
+                                                                                        $all_value = $row6['number'].",".$row1['slot'].",".$row['date'];
+
+                                                                                        ?>
+                                                                                        <option value="<?php echo $all_value?>"><?php echo $row6['name']?></option>
+
+
+                                                                                        <?php
+                                                                                    }
+                                                                                }
+                                                                                ?> </select>
+                                                                            <?php
+                                                                        }
+
+                                                                        ?>
+                                                                    </p>
+                                                                    <?php
+                                                                }
+                                                            }?>
+                                                        </div>
+                                                    </div>
+
+
+                                                <?php
                                                 }
 
                                                 ?>
 
-                                                <div class="d-flex flex-column justify-content-start covidBookings" style="width: 20%; height: 200px; border: 1px solid #33CCCC;border-radius: 5px; margin-bottom: 20px; padding: 0 0px 0px;margin-right: 5px;border-right: none; overflow-y: auto">
-                                                    <div style="position: sticky; top: 0; z-index: 10; background-color: white;" class="d-flex justify-content-center">
-                                                        <p style="font-weight: bold; font-size: 14px; color: #ffffff; background-color: #33cccc ; padding: 2px 4px; margin-bottom: 6px"><?php echo $row['book_date']?></p>
-                                                    </div>
-                                                   <div style="padding: 0 5px">
-                                                       <p style="margin: 0">jkashdhaksdksk</p><p style="margin: 0">jkashdhaksdksk</p><p style="margin: 0">jkashdhaksdksk</p>
-                                                   </div>
-                                                </div>
 
                     <?php
                      }
-
-                     $final_data = json_encode($unique_data);
 
                                         }
                                         ?>
@@ -161,4 +244,30 @@
 <script src="./script/app.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="logout_timer.js"></script>
+<script>
+    $(".user_appointed").change(function(){
+
+
+
+            var data  = $(this).val();
+            var myArray = data.split(",");
+            var user_number = myArray[0];
+            var slot = myArray[1];
+            var date = myArray[2];
+
+        $.ajax({
+                    url : "user_appointed.php",
+                    type : "POST",
+                    data : {number:user_number,slot:slot,date:date},
+                    success : function(data){
+                        if(data == 1){
+                            location.reload();
+                        }else{
+                            alert('failed')
+                        }
+                    }
+                });
+    });
+
+</script>
 </html>

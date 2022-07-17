@@ -66,6 +66,9 @@
                 $res = mysqli_query($conn, $query);
                 $row = mysqli_fetch_assoc($res);
 
+                $active = $row['is_active'];
+                $failed = $row['is_failed'];
+                $completed = $row['is_completed'];
                 if($row['is_active'] == 1){
                     $show = true;
                     $is_active = "checked disabled";
@@ -73,7 +76,7 @@
                     $show = false;
                     $is_active = "";
                 }
-                if($row['is_confirm'] == 1){
+                if($row['is_completed'] == 1){
                     $is_confirm = "fas fa-circle";
                     $style1 = "style='color: #407ef6;pointer-events:none'";
                     $style11 = "style='pointer-events:none'";
@@ -167,14 +170,40 @@
                     <p class="verificationPara">Verifizieren &nbsp<input type="checkbox" name="verify" id="verify" <?php echo $is_active ?>></p>
                 </div>
 
-                <div class="secondCard" id="acceptRequest" <?php echo $style11?>>
-                    Rezept akzeptieren
-                    <div><i class="<?php echo $is_confirm ?>" <?php echo $style1?>></i></div>
-                </div>
-                <div class="thirdCard" id="declineRequest" <?php echo $style22?>>
-                    Rezept ablehnen
-                    <div><i class="<?php echo $is_failed ?>" <?php echo $style2?>></i></div>
-                </div>
+                <?php if($active == 1){?>
+                    <?php if($failed == 0){?>
+                        <div class="secondCard" id="acceptRequest" <?php echo $style11?> >
+                            Rezept akzeptieren
+                            <div><i class="<?php echo $is_confirm ?>" <?php echo $style1?>></i></div>
+                        </div>
+                    <?php }else{?>
+                        <div class="secondCard" id="acceptRequest"  style="pointer-events: none">
+                            Rezept akzeptieren
+                            <div><i class="<?php echo $is_confirm ?>" <?php echo $style1?>></i></div>
+                        </div>
+                    <?php }if($completed == 0){?>
+                        <div class="thirdCard" id="declineRequest" <?php echo $style22?>>
+                            Rezept ablehnen
+                            <div><i class="<?php echo $is_failed ?>" <?php echo $style2?>></i></div>
+                        </div>
+                    <?php }else{?>
+                        <div class="thirdCard" id="declineRequest" style="pointer-events: none">
+                            Rezept ablehnen
+                            <div><i class="<?php echo $is_failed ?>" <?php echo $style2?>></i></div>
+                        </div>
+                    <?php }}else{ ?>
+
+                    <div class="secondCard" id="acceptRequest" style="pointer-events: none" <?php echo $style11?>>
+                        Rezept akzeptieren
+                        <div><i class="<?php echo $is_confirm ?>" <?php echo $style1?>></i></div>
+                    </div>
+                    <div class="thirdCard" id="declineRequest" style="pointer-events: none" <?php echo $style22?>>
+                        Rezept ablehnen
+                        <div><i class="<?php echo $is_failed ?>" <?php echo $style2?>></i></div>
+                    </div>
+
+
+                <?php } ?>
             </main>
         </section>
     </section>

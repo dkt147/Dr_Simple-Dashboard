@@ -64,6 +64,7 @@
                 $res = mysqli_query($conn, $query);
                 $row = mysqli_fetch_assoc($res);
 
+                $active = $row['is_active'];
                 if($row['is_active'] == 1){
                     $show = true;
                     $is_active = "checked disabled";
@@ -161,6 +162,17 @@
             </header>
             <main>
 
+                <?php if($active == 0){?>
+
+                <div class="firstCard">
+                    <p>Patient ist nicht verifiziert!</p>
+                    <p>
+                        Manuelle Verifikation erforderlich. <br>
+                        Z.B. Übereinstimmung der Daten
+                    </p>
+                    <p class="verificationPara">Verifizieren &nbsp<input type="checkbox" name="verify" id="verify" <?php echo $is_active ?>></p>
+                </div>
+                <?php }else{?>
                                 <div class="thirdCard thirdCard2" id="acceptRequest" >
                                     <form action="save_consult.php" method="post">
                                         <input type="text" value="<?php echo $row['a_id']?>" hidden name="a_id">
@@ -174,11 +186,15 @@
 
                     <form action="save_date_consult.php" method="post">
                         <input type="text" value="<?php echo $row['a_id']?>" hidden name="a_id">
-<!--                    <input type="date" id="save_date_value" --><?php //echo $date_style?><!-- --><?php //echo $date_value?><!-- name="save_date_value" required>-->
                     <input type="submit"  value="Anfrage ablehnen" class="btn btn-primary" style="background-color: #007bff !important;">
                     </form>
-                    <div></div>
+                    <div>
+
+
+                    </div>
                 </div>
+                <?php }?>
+
             </main>
         </section>
     </section>
@@ -188,5 +204,23 @@
 <script src="./script/app.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="logout_timer.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="logout_timer.js"></script>
+<script>
+    $(document).ready(function(){
 
+        $("#verify").click(function(){
+            console.log('verify');
+            $.ajax({
+                type: "POST",
+                url: 'verify_user.php',
+                data: {'user_id': <?php echo $row['id']?>,},
+                success: function(response){
+                    console.log('request sent')
+                    location.reload();
+                }
+            });
+        });
+    });
+</script>
 </html>

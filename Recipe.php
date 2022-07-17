@@ -343,7 +343,7 @@
                                     </p>
                                 </td>
                                 <td  class="table1ThirdColumn table1ThirdColumn2" onclick="location.href = 'subpage1.php?id=<?php echo $row['o_id'] ?>';">
-                                    <p><?php echo $row['r_name'] ?></p>
+                                    <p><?php echo "Rezept Bestellung" ?></p>
                                 </td>
 
                                 <td class="tableDosesColumn" onclick="location.href = 'subpage1.php?id=<?php echo $row['o_id'] ?>';">
@@ -373,7 +373,9 @@
 
                                     <?php  }else{?>
                                         <div class="redStatus"> <p class="redStatusP">
-                                                <?php echo 'Requested ';?>
+                                               <?php
+                                               echo 'Requested'
+                                               ?>
                                             </p></div>
 
                                     <?php  }

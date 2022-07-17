@@ -12,7 +12,7 @@
 
         </div>
         <div>
-            <img src="<?php if($page=="transfer"){?>./image/thirdIcon-A.png<?php }else{?>./image/thirdIcon.png<?php } ?>" alt="">
+            <img src="<?php if($page=="transfers"){?>./image/thirdIcon-A.png<?php }else{?>./image/thirdIcon.png<?php } ?>" alt="">
             <a href="transfers.php" style="text-decoration: none"><p <?php if($page=="transfers"){?>class="activeLink"';<?php } ?>>Überweisungen</p></a>
         </div>
         <div>
