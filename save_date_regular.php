@@ -12,6 +12,6 @@ if(mysqli_num_rows($query) > 0){
     $insert = "INSERT INTO schedule(date,type)VALUES('$save_date_value','consult')";
     $query = mysqli_query($conn,$insert);
 
-    $location = 'location: consultation.php?id='.$a_id;
+    $location = 'location: appointment.php?id='.$a_id;
     header($location);
 }

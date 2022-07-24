@@ -46,7 +46,7 @@
                 //Stablishing Connection...
                 include 'config.php';
                 $id = $_GET['id'];
-                echo $query = "SELECT 
+                $query = "SELECT 
                                     patient.id as p_id,
                                     patient.name,
                                     patient.dob, 
