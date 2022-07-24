@@ -25,7 +25,7 @@
 
 <body class="dashboardWholeBody">
 <main class="secondPageMainContainer">
-    <?php $page="recipe"; include 'sidebar.php'?>
+    <?php $page="Recipe"; include 'sidebar.php'?>
     <section class="dashboardAbsoluteSection">
         <header class="dashboardNavSection">
             <h2>Rezepte</h2>
@@ -75,7 +75,7 @@
 <!--                            src="./image/Dashboard/TitleSection/trash.png" alt=""></div>-->
 <!--            </section>-->
 
-            <section class="dashboardTitleSection">
+<section class="dashboardTitleSection">
                 <div class="chooseTitle">
                     <div><i class="fa-regular fa-square" onclick="allCheckToggler(this)"
                             style="cursor: pointer;"></i>
@@ -86,11 +86,8 @@
                 <div class="patientTitle">
                     <p>Patient</p>
                 </div>
-                <div class="titleTitle titleTitle2">
+                <div class="titleTitle">
                     <p>Title</p>
-                </div>
-                <div class="dosesTitle">
-                    <p>Doses</p>
                 </div>
                 <div class="statusTitle">
                     <p>Status</p>
@@ -137,7 +134,7 @@
                                     ON patient.number = order.u_id
                                     JOIN recipe
                                     ON recipe.id = order.r_id WHERE  patient.name = '$name' and order.is_completed = 1
-                                    order by id desc";
+                                    order by order.date asc";
 
                             }else if($_POST['filterproduct'] == 'undone'){
                                 $query = "SELECT 
@@ -152,7 +149,7 @@
                                     ON patient.number = order.u_id
                                     JOIN recipe
                                     ON recipe.id = order.r_id WHERE  patient.name = '$name' and order.is_completed = 0
-                                    order by id desc";
+                                    order by order.date asc";
                             }else if($_POST['filterproduct'] == 'accepted'){
                                 $query = "SELECT 
                                     patient.id,
@@ -166,7 +163,7 @@
                                     ON patient.number = order.u_id
                                     JOIN recipe
                                     ON recipe.id = order.r_id WHERE  patient.name = '$name' and order.is_confirm = 1
-                                    order by id desc";
+                                    order by order.date asc";
                             }else if($_POST['filterproduct'] == 'decline'){
                                 $query = "SELECT 
                                     patient.id,
@@ -180,7 +177,7 @@
                                     ON patient.number = order.u_id
                                     JOIN recipe
                                     ON recipe.id = order.r_id WHERE  patient.name = '$name' and order.is_failed = 1
-                                    order by id desc";
+                                    order by order.date asc";
                             }else if($_POST['filterproduct'] == 'star'){
                                 $query = "SELECT 
                                     patient.id,
@@ -194,7 +191,7 @@
                                     ON patient.number = order.u_id
                                     JOIN recipe
                                     ON recipe.id = order.r_id WHERE  patient.name = '$name' and order.is_star = 1
-                                    order by id desc";
+                                    order by order.date asc";
                             }
                         }else if(!empty($_POST['filterproduct'])){
                             if($_POST['filterproduct'] == 'done'){
@@ -210,7 +207,7 @@
                                     ON patient.number = order.u_id
                                     JOIN recipe
                                     ON recipe.id = order.r_id WHERE order.is_completed = 1
-                                    order by id desc";
+                                    order by order.date asc";
                             }else if($_POST['filterproduct'] == 'undone'){
                                 $query = "SELECT 
                                     patient.id,
@@ -224,7 +221,7 @@
                                     ON patient.number = order.u_id
                                     JOIN recipe
                                     ON recipe.id = order.r_id WHERE order.is_completed = 0
-                                    order by id desc";
+                                    order by order.date asc";
                             }else if($_POST['filterproduct'] == 'accepted'){
                                 $query = "SELECT 
                                     patient.id,
@@ -238,7 +235,7 @@
                                     ON patient.number = order.u_id
                                     JOIN recipe
                                     ON recipe.id = order.r_id WHERE order.is_confirm = 1
-                                    order by id desc";
+                                    order by order.date asc";
                             }else if($_POST['filterproduct'] == 'decline'){
                                 $query = "SELECT 
                                     patient.id,
@@ -252,7 +249,7 @@
                                     ON patient.number = order.u_id
                                     JOIN recipe
                                     ON recipe.id = order.r_id WHERE order.is_failed = 1
-                                    order by id desc";
+                                    order by order.date asc";
                             }else if($_POST['filterproduct'] == 'star'){
                                 $query = "SELECT 
                                     patient.id,
@@ -266,7 +263,7 @@
                                     ON patient.number = order.u_id
                                     JOIN recipe
                                     ON recipe.id = order.r_id WHERE order.is_star = 1
-                                    order by id desc";
+                                    order by order.date asc";
                             }
                         }else{
 
@@ -282,7 +279,7 @@
                                     ON patient.number = order.u_id
                                     JOIN recipe
                                     ON recipe.id = order.r_id WHERE patient.name = '$name'
-                                    order by id desc";
+                                    order by order.date asc";
                         }
 
 
@@ -301,7 +298,7 @@
                                     ON patient.number = order.u_id
                                     JOIN recipe
                                     ON recipe.id = order.r_id
-                                    order by id desc";
+                                    order by order.date asc";
 
                         $res = mysqli_query($conn, $query);
                     }
@@ -312,7 +309,7 @@
                             ?>
                             <tr >
                                 <td class="table1FirstColumn">
-                                    <div><i class="fa-regular fa-square forAllCheck" onclick="checkToggler(this)"></i></div>
+                                <div><i class="fa-regular fa-square forAllCheck" onclick="checkToggler(this)"></i><input type="checkbox" class="inputCheckField" name="check" value="<?php echo $row['o_id'] ?>" ></div>
 
                                     <?php
                                     if($row['is_star'] == 1){
@@ -333,7 +330,7 @@
                                     <p><?php echo $row['u_name'] ?>
 
                                         <?php
-                                        if($row['is_active'] == 0){
+                                        if($row['is_active'] == 1){
                                             ?>
                                             <img src="./image/Dashboard/TitleSection/verified-badge.png" alt="">
                                             <?php
@@ -342,13 +339,13 @@
 
                                     </p>
                                 </td>
-                                <td  class="table1ThirdColumn table1ThirdColumn2" onclick="location.href = 'subpage1.php?id=<?php echo $row['o_id'] ?>';">
+                                <td  class="table1ThirdColumn" onclick="location.href = 'subpage1.php?id=<?php echo $row['o_id'] ?>';">
                                     <p><?php echo "Rezept Bestellung" ?></p>
                                 </td>
 
-                                <td class="tableDosesColumn" onclick="location.href = 'subpage1.php?id=<?php echo $row['o_id'] ?>';">
+                                <!-- <td class="tableDosesColumn" onclick="location.href = 'subpage1.php?id=<?php echo $row['o_id'] ?>';">
                                     <p><?php echo $row['power'] ?></p>
-                                </td>
+                                </td> -->
                                 <td class="table1ForthColumn" >
 
 
@@ -362,7 +359,7 @@
                                             <?php
                                     }else if($row['is_completed'] == 1){?>
                                         <div class="lightBlueStatus"> <p class="lightBlueStatusP">
-                                                <?php  echo 'Completed';?>
+                                                <?php  echo 'Fertig';?>
                                             </p></div>
 
                                         <?php
@@ -513,13 +510,40 @@
                             if(data == 1){
                                 location.reload();
                             }else{
-
                             }
                         }
                     });
                 }
             }
         });
+
+        
+var fixed = 3600        
+var seconds=fixed;
+var timer;
+function myFunction() {
+  if(seconds < fixed) { // I want it to say 1:00, not 60
+  }
+  if (seconds >0 ) { // so it doesn't go to -1
+     seconds--;
+console.log(seconds)
+  } else {
+     clearInterval(timer);
+     window.location.replace("logout.php");
+  }
+}
+
+$( ".dashboardWholeBody" ).mousemove(function( event ) {
+seconds=fixed;
+});
+  
+if(!timer) {
+    timer = window.setInterval(function() { 
+      myFunction();
+    }, 1000); // every second
+  }
+  
+  
     });
 </script>
 </html><?php

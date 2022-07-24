@@ -26,7 +26,7 @@
 <body class="dashboardWholeBody">
 <main class="secondPageMainContainer">
 
-    <?php $page="all"; include 'sidebar.php'?>
+    <?php $page="All"; include 'sidebar.php'?>
     <section class="dashboardAbsoluteSection">
         <header class="dashboardNavSection">
             <h2>Dashboard</h2>
@@ -130,7 +130,7 @@
                                     FROM `appointment`
                                     JOIN patient
                                     ON patient.number = appointment.u_id WHERE patient.name = '$name' and appointment.type != 'covid' and appointment.is_completed = 1
-                                    order by id desc";
+                                    order by appointment.date asc";
                             }else if($_POST['filterproduct'] == 'undone'){
                                     $query = "SELECT 
                                     patient.id,
@@ -141,7 +141,7 @@
                                     FROM `appointment`
                                     JOIN patient
                                     ON patient.number = appointment.u_id WHERE patient.name = '$name' and appointment.type != 'covid' and appointment.is_completed = 0
-                                    order by id desc";
+                                    order by appointment.date asc";
                                 }else if($_POST['filterproduct'] == 'accepted'){
                                     $query = "SELECT 
                                     patient.id,
@@ -152,7 +152,7 @@
                                     FROM `appointment`
                                     JOIN patient
                                     ON patient.number = appointment.u_id WHERE patient.name = '$name' and appointment.type != 'covid' and appointment.is_confirm = 1
-                                    order by id desc";
+                                    order by appointment.date asc";
                                 }else if($_POST['filterproduct'] == 'decline'){
                                     $query = "SELECT 
                                     patient.id,
@@ -163,7 +163,7 @@
                                     FROM `appointment`
                                     JOIN patient
                                     ON patient.number = appointment.u_id WHERE patient.name = '$name' and appointment.type != 'covid' and appointment.is_failed = 1
-                                    order by id desc";
+                                    order by appointment.date asc";
                                 }else if($_POST['filterproduct'] == 'star'){
                                     $query = "SELECT 
                                     patient.id,
@@ -174,7 +174,7 @@
                                     FROM `appointment`
                                     JOIN patient
                                     ON patient.number = appointment.u_id WHERE patient.name = '$name' and appointment.type != 'covid' and appointment.is_star = 1
-                                    order by id desc";
+                                    order by appointment.date asc";
                                 }
                             }else if(!empty($_POST['filterproduct'])){
                             if($_POST['filterproduct'] == 'done'){
@@ -187,7 +187,7 @@
                                     FROM `appointment`
                                     JOIN patient
                                     ON patient.number = appointment.u_id WHERE appointment.type != 'covid' and appointment.is_completed = 1
-                                    order by id desc";
+                                    order by appointment.date asc";
                             }else if($_POST['filterproduct'] == 'undone'){
                                     $query = "SELECT 
                                     patient.id,
@@ -198,7 +198,7 @@
                                     FROM `appointment`
                                     JOIN patient
                                     ON patient.number = appointment.u_id WHERE appointment.type != 'covid' and appointment.is_completed = 0
-                                    order by id desc";
+                                    order by appointment.date asc";
                                 }else if($_POST['filterproduct'] == 'accepted'){
                                     $query = "SELECT 
                                     patient.id,
@@ -209,7 +209,7 @@
                                     FROM `appointment`
                                     JOIN patient
                                     ON patient.number = appointment.u_id WHERE appointment.type != 'covid' and appointment.is_confirm = 1
-                                    order by id desc";
+                                    order by appointment.date asc";
                                 }else if($_POST['filterproduct'] == 'decline'){
                                     $query = "SELECT 
                                     patient.id,
@@ -220,7 +220,7 @@
                                     FROM `appointment`
                                     JOIN patient
                                     ON patient.number = appointment.u_id WHERE appointment.type != 'covid' and appointment.is_failed = 1
-                                    order by id desc";
+                                    order by appointment.date asc";
                                 }else if($_POST['filterproduct'] == 'star'){
                                     $query = "SELECT 
                                     patient.id,
@@ -231,7 +231,7 @@
                                     FROM `appointment`
                                     JOIN patient
                                     ON patient.number = appointment.u_id WHERE appointment.type != 'covid' and appointment.is_star = 1
-                                    order by id desc";
+                                    order by appointment.date asc";
                                 }
                             }else{
 
@@ -245,7 +245,7 @@
                                     FROM `appointment`
                                     JOIN patient
                                     ON patient.number = appointment.u_id WHERE patient.name = '$name' and appointment.type != 'covid'
-                                    order by id desc";
+                                    order by appointment.date asc";
                             }
 
                         $res = mysqli_query($conn, $query);
@@ -260,7 +260,7 @@
                                     FROM `appointment`
                                     JOIN patient
                                     ON patient.number = appointment.u_id Where appointment.type != 'covid'
-                                    order by id desc";
+                                    order by appointment.date asc";
 
                         $res = mysqli_query($conn, $query);
                     }
@@ -343,7 +343,7 @@
                                     }else if($row['is_completed'] == 1){?>
                                         <div class="lightBlueStatus">
                                             <p class="lightBlueStatusP">
-                                                <?php  echo 'Completed';?>
+                                                <?php  echo 'Fertig';?>
                                             </p>
                                         </div>
 
@@ -366,7 +366,7 @@
                             ?>
                         </td>
                         <td class="table1FifthColumn">
-                            <p><?php echo $row['book_date'] ?></p>
+                            <p><?php echo $row['date'] ?></p>
                         </td>
                     </tr>
 <?php
@@ -506,6 +506,34 @@
                 }
             }
         });
+
+
+var fixed = 3600        
+var seconds=fixed;
+var timer;
+function myFunction() {
+  if(seconds < fixed) { // I want it to say 1:00, not 60
+  }
+  if (seconds >0 ) { // so it doesn't go to -1
+     seconds--;
+console.log(seconds)
+  } else {
+     clearInterval(timer);
+     window.location.replace("logout.php");
+  }
+}
+
+$( ".dashboardWholeBody" ).mousemove(function( event ) {
+seconds=fixed;
+});
+  
+if(!timer) {
+    timer = window.setInterval(function() { 
+      myFunction();
+    }, 1000); // every second
+  }
+  
+
     });
 </script>
 </html>

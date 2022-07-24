@@ -2,13 +2,13 @@
     <img src="./image/logo.png" alt="">
     <section class="dashboardIconSection">
         <div>
-                <img src="<?php if($page=="all"){?>./image/firstIcon-A.png<?php }else{?>./image/firstIcon.png<?php } ?>"  alt="">
-            <a href="All.php" style="text-decoration: none"><p <?php if($page=="all"){?>class="activeLink"';<?php } ?>>Alle</p></a>
+                <img src="<?php if($page=="All"){?>./image/firstIcon-A.png<?php }else{?>./image/firstIcon.png<?php } ?>"  alt="">
+            <a href="All.php" style="text-decoration: none"><p <?php if($page=="All"){?>class="activeLink"';<?php } ?>>Alle</p></a>
            </div>
         <div>
 
-            <img src="<?php if($page=="recipe"){?>./image/secondIcon-A.png<?php }else{?>./image/secondIcon.png<?php } ?>" alt="">
-            <a href="Recipe.php" style="text-decoration: none" ><p <?php if($page=="recipe"){?>class="activeLink"';<?php } ?>>Rezepte</p></a>
+            <img src="<?php if($page=="Recipe"){?>./image/secondIcon-A.png<?php }else{?>./image/secondIcon.png<?php } ?>" alt="">
+            <a href="Recipe.php" style="text-decoration: none" ><p <?php if($page=="Recipe"){?>class="activeLink"';<?php } ?>>Rezepte</p></a>
 
         </div>
         <div>
@@ -23,10 +23,10 @@
             <img src="<?php if($page=="appointment"){?>./image/secondLastIcon-A.png<?php }else{?>./image/secondLastIcon.png<?php } ?>" alt="">
             <a href="appointment.php" style="text-decoration: none"><p <?php if($page=="appointment"){?>class="activeLink"';<?php } ?>>Regulärer Termin</p></a>
         </div>
-        <div>
+        <!-- <div>
             <img src="<?php if($page=="covid"){?>./image/lastIcon-A.png<?php }else{?>./image/lastIcon.png<?php } ?>" alt="">
             <a href="Covid.php" style="text-decoration: none"><p <?php if($page=="covid"){?>class="activeLink"';<?php } ?>>Covid-19  Impfung</p></a>
-        </div>
+        </div> -->
     </section>
     <div style="color: white;">
         <p><a href="All.php" style="text-decoration: none;color:white"><b>Dashboard</b></a> | <a href="patienten.php" style="text-decoration: none;color:white">Patienten</p></a>

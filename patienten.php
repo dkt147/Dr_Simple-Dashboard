@@ -104,11 +104,11 @@
                         $name = $_POST['searchproduct'];
                         $filter = $_POST['filterproduct'];
 
-                        $query = "SELECT * FROM `patient` where name = '$name' order by id desc";
+                        $query = "SELECT * FROM `patient` where name = '$name' order by date asc";
                         $res = mysqli_query($conn, $query);
                     }
                     else{
-                        $query = "SELECT * FROM `patient` order by id desc";
+                        $query = "SELECT * FROM `patient` order by date asc";
                         $res = mysqli_query($conn, $query);
                     }
 
@@ -149,7 +149,7 @@ if($row['is_active'] == 1){
                         </td>
                         <td class="tableSeparator hiddenElement"> | </td>
                         <td class="table2IconSect">
-                            <?php
+                            <!-- <?php
                             if($row['is_active'] == 1){
                                 ?>
                                 <img src="./image/Dashboard/TitleSection/verified-badge.png" alt="">
@@ -159,7 +159,7 @@ if($row['is_active'] == 1){
                                 <img src="./image/Dashboard/UserTitleSection/block.png" alt="" >
                                 <?php
                             }
-                            ?>
+                            ?> -->
                         </td>
 
                     </tr>
@@ -276,48 +276,32 @@ if($row['is_active'] == 1){
             }
         });
 
-        // // All Data Star
-        // $("#reply_user").on("click",function(){
-        //
-        //     console.log('asas')
-        //     // let message;
-        //     // let person = prompt("Please enter message:", "");
-        //     // if (person == null || person == "") {
-        //     //
-        //     // } else {
-        //     //     message = person;
-        //
-        //         var id = [];
-        //
-        //         // Converted all checked checkbox's value into Array
-        //         $(":checkbox:checked").each(function(key){
-        //             id[key] = $(this).val();
-        //         });
-        //         console.log(id)
-        //
-        //         if(id.length === 0){
-        //             alert("Please Select atleast one star.");
-        //         }else{
-        //             if(confirm("Do you really want to send this message ?")){
-        //                 $.ajax({
-        //                     url : "reply__user.php",
-        //                     type : "POST",
-        //                     data : {id : id}
-        //                     success : function(data){
-        //                             alert("Message Sent.");
-        //                             location.reload();
-        //                     }
-        //                 });
-        //             }
-        //         }
-        //     // }
-        //
-        // });
-        // $(document).ready(function(){
-        //     $("p").mouseover(function(){
-        //         alert('move')
-        //     });
-        // });
+      
+var fixed = 3600        
+var seconds=fixed;
+var timer;
+function myFunction() {
+  if(seconds < fixed) { // I want it to say 1:00, not 60
+  }
+  if (seconds >0 ) { // so it doesn't go to -1
+     seconds--;
+console.log(seconds)
+  } else {
+     clearInterval(timer);
+     window.location.replace("logout.php");
+  }
+}
+
+$( ".dashboardWholeBody" ).mousemove(function( event ) {
+seconds=fixed;
+});
+  
+if(!timer) {
+    timer = window.setInterval(function() { 
+      myFunction();
+    }, 1000); // every second
+  }
+  
     });
 </script>
 </html>

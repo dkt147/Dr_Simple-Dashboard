@@ -29,7 +29,13 @@
         <img src="./image/logo.png" alt="">
 
         <div style="color: white;">
-            <p><b>Dashboard</b> | Notifications</p>
+        <?php 
+        if($_GET['redirect'] == 'patienten'){?>
+            <p><a href="All.php" style="text-decoration: none;color:white">Dashboard</a>| <a href="patienten.php" style="text-decoration: none;color:white"><b>Patienten</b></a> </p>
+        <?php }else{
+        ?>
+             <p><a href="<?php echo $_GET['redirect']?>.php" style="text-decoration: none;color:white"> <b>Dashboard</b> </a> | <a href="patienten.php" style="text-decoration: none;color:white">Patienten</a></p>
+             <?php }?>
         </div>
     </section>
 
@@ -56,7 +62,7 @@
                         <input type="button" name="send" class="btn" value="Nachricht senden" id="form-submit" style="width: 220px;background-color: #33CCCC;color: white">
                     </div><br><br><br>
                     <div class="form-group">
-                        <a type="submit"  class="btn btn-warning" href="<?php echo $_GET['redirect']?>.php"><< back</a>
+                        <a type="submit"  class="btn" href="<?php echo $_GET['redirect']?>.php"style="background-color: #33CCCC;color: white;width: 120px">Back</a>
                     </div>
                 </form>
             </section>
@@ -87,6 +93,34 @@
                 }
             });
         });
+
+
+           
+var fixed = 3600        
+var seconds=fixed;
+var timer;
+function myFunction() {
+  if(seconds < fixed) { // I want it to say 1:00, not 60
+  }
+  if (seconds >0 ) { // so it doesn't go to -1
+     seconds--;
+console.log(seconds)
+  } else {
+     clearInterval(timer);
+     window.location.replace("logout.php");
+  }
+}
+
+$( ".dashboardWholeBody" ).mousemove(function( event ) {
+seconds=fixed;
+});
+  
+if(!timer) {
+    timer = window.setInterval(function() { 
+      myFunction();
+    }, 1000); // every second
+  }
+  
 
     });
 </script>

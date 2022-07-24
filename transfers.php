@@ -84,7 +84,7 @@
                     <p>Patient</p>
                 </div>
                 <div class="titleTitle">
-                    <p>Category</p>
+                    <p>Title</p>
                 </div>
                 <div class="statusTitle">
                     <p>Status</p>
@@ -129,7 +129,7 @@
                                     ON patient.number = referal.u_id
                                     JOIN categories
                                     ON categories.id = referal.c_id WHERE  patient.name = '$name' and referal.is_completed = 1
-                                    order by id desc";
+                                    order by referal.date asc";
 
                             }else if($_POST['filterproduct'] == 'undone'){
                                 $query = "SELECT 
@@ -143,7 +143,7 @@
                                     ON patient.number = referal.u_id
                                     JOIN categories
                                     ON categories.id = referal.c_id WHERE  patient.name = '$name' and referal.is_completed = 0
-                                    order by id desc";
+                                    order by referal.date asc";
                             }else if($_POST['filterproduct'] == 'accepted'){
                                 $query = "SELECT 
                                     patient.id,
@@ -156,7 +156,7 @@
                                     ON patient.number = referal.u_id
                                     JOIN categories
                                     ON categories.id = referal.c_id WHERE  patient.name = '$name' and referal.is_confirm = 1
-                                    order by id desc";
+                                    order by referal.date asc";
                             }else if($_POST['filterproduct'] == 'decline'){
                                 $query = "SELECT 
                                     patient.id,
@@ -169,7 +169,7 @@
                                     ON patient.number = referal.u_id
                                     JOIN categories
                                     ON categories.id = referal.c_id WHERE  patient.name = '$name' and referal.is_failed = 1
-                                    order by id desc";
+                                    order by referal.date asc";
                             }else if($_POST['filterproduct'] == 'star'){
                                 $query = "SELECT 
                                     patient.id,
@@ -182,7 +182,7 @@
                                     ON patient.number = referal.u_id
                                     JOIN categories
                                     ON categories.id = referal.c_id WHERE  patient.name = '$name' and referal.is_star = 1
-                                    order by id desc";
+                                    order by referal.date asc";
                             }
                         }else if(!empty($_POST['filterproduct'])){
                             if($_POST['filterproduct'] == 'done'){
@@ -197,7 +197,7 @@
                                     ON patient.number = referal.u_id
                                     JOIN categories
                                     ON categories.id = referal.c_id WHERE referal.is_completed = 1
-                                    order by id desc";
+                                    order by referal.date asc";
                             }else if($_POST['filterproduct'] == 'undone'){
                                 $query = "SELECT 
                                     patient.id,
@@ -210,7 +210,7 @@
                                     ON patient.number = referal.u_id
                                     JOIN categories
                                     ON categories.id = referal.c_id WHERE referal.is_completed = 0
-                                    order by id desc";
+                                    order by referal.date asc";
                             }else if($_POST['filterproduct'] == 'accepted'){
                                 $query = "SELECT 
                                     patient.id,
@@ -223,7 +223,7 @@
                                     ON patient.number = referal.u_id
                                     JOIN categories
                                     ON categories.id = referal.c_id WHERE referal.is_confirm = 1
-                                    order by id desc";
+                                    order by referal.date asc";
                             }else if($_POST['filterproduct'] == 'decline'){
                                 $query = "SELECT 
                                     patient.id,
@@ -236,7 +236,7 @@
                                     ON patient.number = referal.u_id
                                     JOIN categories
                                     ON categories.id = referal.c_id WHERE referal.is_failed = 1
-                                    order by id desc";
+                                    order by referal.date asc";
                             }else if($_POST['filterproduct'] == 'star'){
                                 $query = "SELECT 
                                     patient.id,
@@ -249,7 +249,7 @@
                                     ON patient.number = referal.u_id
                                     JOIN categories
                                     ON categories.id = referal.c_id WHERE referal.is_star = 1
-                                    order by id desc";
+                                    order by referal.date asc";
                             }
                         }else{
 
@@ -264,7 +264,7 @@
                                     ON patient.number = referal.u_id
                                     JOIN categories
                                     ON categories.id = referal.c_id WHERE  patient.name = '$name'
-                                    order by id desc";
+                                    order by referal.date asc";
                         }
 
                         $res = mysqli_query($conn, $query);
@@ -281,7 +281,7 @@
                                     ON patient.number = referal.u_id
                                     JOIN categories
                                     ON categories.id = referal.c_id
-                                    order by id desc";
+                                    order by referal.date asc";
 
                         $res = mysqli_query($conn, $query);
                     }
@@ -293,7 +293,8 @@
                             ?>
                             <tr >
                                 <td class="table1FirstColumn">
-                                    <div><i class="fa-regular fa-square forAllCheck" onclick="checkToggler(this)"></i></div>
+                                    
+                                <div><i class="fa-regular fa-square forAllCheck" onclick="checkToggler(this)"></i><input type="checkbox" class="inputCheckField" name="check" value="<?php echo $row['r_id'] ?>" ></div>
 
                                     <?php
                                     if($row['is_star'] == 1){
@@ -335,7 +336,7 @@
                                         <?php
                                     }else if($row['is_completed'] == 1){?>
                                         <div class="lightBlueStatus"><p class="lightBlueStatusP">
-                                                <?php  echo 'Completed';?>
+                                                <?php  echo 'Fertig';?>
                                             </p></div>
 
                                         <?php
@@ -489,6 +490,33 @@
                 }
             }
         });
+
+           
+var fixed = 3600        
+var seconds=fixed;
+var timer;
+function myFunction() {
+  if(seconds < fixed) { // I want it to say 1:00, not 60
+  }
+  if (seconds >0 ) { // so it doesn't go to -1
+     seconds--;
+console.log(seconds)
+  } else {
+     clearInterval(timer);
+     window.location.replace("logout.php");
+  }
+}
+
+$( ".dashboardWholeBody" ).mousemove(function( event ) {
+seconds=fixed;
+});
+  
+if(!timer) {
+    timer = window.setInterval(function() { 
+      myFunction();
+    }, 1000); // every second
+  }
+  
     });
 </script>
 </html><?php

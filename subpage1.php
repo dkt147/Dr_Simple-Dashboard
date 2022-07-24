@@ -107,9 +107,12 @@
                             </td>
                             <td class="tableSeparator2">|</td>
                             <td class="table3HeaderIcons">
-                                <section><i class="fa-regular fa-star"></i></section>
-                                <section><i class="fa-solid fa-reply"></i></section>
-                                <section><img src="./image/Dashboard/TitleSection/trash.png" alt=""></section>
+                            <div class="single_star">
+                                <i class="fa-regular fa-star forAllStar" onclick="starToggler(this)" ></i>
+                                <input type="checkbox" class="inputStarField" name="star" value="<?php echo $_GET['id'] ?>" >
+                                    </div>
+                                <section class="reply_user"><i class="fa-solid fa-reply"></i></section>
+                                <section class="delete-btn"><img src="./image/Dashboard/TitleSection/trash.png" alt=""></section>
                             </td>
                         </tr>
                         <tr class="table3Content">
@@ -264,6 +267,99 @@
                 }
             });
         });
+
+                // Single Data Star
+                $(".single_star").on("click",function(){
+        var id = <?php echo json_encode($_GET['id']);?>
+
+                $.ajax({
+                    url : "star_all_data.php",
+                    type : "POST",
+                    data : {id : id},
+                    success : function(data){
+                        if(data == 1){
+                            location.reload();
+                        }else{
+                        }
+                    }
+                });
+        });
+
+        // Single Data Star
+        $(".unstar").on("click",function(){
+
+        var id = <?php $_GET['id']?>
+        console.log(id)
+
+        if(id.length === 0){
+            alert("Please Select atleast one star.");
+        }else{
+            if(confirm("Do you really want to un-star this records ?")){
+                $.ajax({
+                    url : "unstar_all_data.php",
+                    type : "POST",
+                    data : {id : id},
+                    success : function(data){
+                        if(data == 1){
+                            alert("Marked as un starred.");
+                            location.reload();
+                        }else{
+                        }
+                    }
+                });
+            }
+        }
+        });
+
+
+        // Multiple Data Delete
+        $(".delete-btn").on("click",function(){
+        console.log('delete query')
+        var id = <?php $_GET['id']?>
+        console.log(id)
+
+            if(confirm("Do you really want to delete this record?")){
+                $.ajax({
+                    url : "delete_all_data.php",
+                    type : "POST",
+                    data : {id : id},
+                    success : function(data){
+                        if(data == 1){
+                            location.href('Recipe.php');
+                        }else{
+                        }
+                    }
+                });
+            }
+        });
+
+        
+var fixed = 3600        
+var seconds=fixed;
+var timer;
+function myFunction() {
+  if(seconds < fixed) { // I want it to say 1:00, not 60
+  }
+  if (seconds >0 ) { // so it doesn't go to -1
+     seconds--;
+console.log(seconds)
+  } else {
+     clearInterval(timer);
+     window.location.replace("logout.php");
+  }
+}
+
+$( ".dashboardWholeBody" ).mousemove(function( event ) {
+seconds=fixed;
+});
+  
+if(!timer) {
+    timer = window.setInterval(function() { 
+      myFunction();
+    }, 1000); // every second
+  }
+  
+
     });
 </script>
 </html>
