@@ -47,15 +47,15 @@
                 include 'config.php';
                 $id = $_GET['id'];
                 $query = "SELECT 
-                                    patient.id as p_id,
+                                    patient.id,
                                     patient.name,
                                     patient.dob, 
                                     patient.number,
                                     patient.is_active,
                                     doctors.id as doctor_id, 
                                     doctors.name as d_name,       
-                                    appointment.id as a_id,appointment.d_id as dr_id,appointment.type,appointment.date,appointment.is_completed,appointment.is_confirm, appointment.updated_at,     
-                                    appointment.book_date,appointment.reason,appointment.is_failed
+                                    appointment.id as a_id,appointment.d_id as dr_id,appointment.type,appointment.date,appointment.is_completed,appointment.is_confirm,   
+                                    appointment.book_date,appointment.reason,appointment.is_failed,appointment.is_star
                                     FROM `appointment`
                                     JOIN patient
                                     ON patient.number = appointment.u_id
@@ -74,7 +74,7 @@
                     $show = false;
                     $is_active = "";
                 }
-                if($row['updated_at'] != NULL){
+                if($row['book_date'] != NULL){
                     $date_style = "disabled";
                     $date_value = "value='".$row['book_date']."'";
                 }else{
@@ -110,13 +110,30 @@
                             </td>
                             <td class="tableSeparator2">|</td>
                             <td class="table3HeaderIcons">
-                                <section><i class="fa-regular fa-star"></i></section>
-                                <section><i class="fa-solid fa-reply"></i></section>
-                                <section><img src="./image/Dashboard/TitleSection/trash.png" alt=""></section>
+                           
+                                <?php
+                                    if($row['is_star'] == 1){
+                                    ?>
+                                    <div class="unstar"><i class="fa-solid fa-star forAllStar" onclick="starToggler(this)" ></i>
+                                        <input type="checkbox" class="inputStarField" name="star" value="<?php echo $_GET['id'] ?>"  checked>
+                                        <?php
+                                        }else{
+                                        ?>
+                                        <div class="single_star"><i class="fa-regular fa-star forAllStar" onclick="starToggler(this)" ></i>
+                                            <input type="checkbox" class="inputStarField" name="star" value="<?php echo $_GET['id'] ?>" >
+                                            <?php
+                                            }
+                                            ?>
+                                    </div>
+                                <section class="reply_users"><i class="fa-solid fa-reply"></i></section>
+                                <section class="delete-btn"><img src="./image/Dashboard/TitleSection/trash.png" alt=""></section>
                             </td>
                         </tr>
                         <tr class="table3Content">
                             <td>
+                                <input hidden value="<?php echo $row['id']?>" id="patient_id">
+                                <input hidden value="<?php echo $row['number']?>" id="number">
+                                <input hidden value="<?php echo $row['a_id']?>" id="recipe_id">
                                 <p class="namePara"><?php echo $row['name']?>
                                     <?php
                                     if($show == true){
@@ -196,10 +213,12 @@
 
         $("#acceptRequest").click(function(){
             console.log('accepted');
+            var id = document.getElementById('recipe_id').value
+console.log(id)
             $.ajax({
                 type: "POST",
                 url: 'accept_recipe.php',
-                data: {'o_id': <?php echo $row['o_id']?>,},
+                data: {'o_id': id},
                 success: function(response){
                     console.log('request sent')
                     location.reload();
@@ -208,11 +227,13 @@
         });
 
         $("#declineRequest").click(function(){
+            var id = document.getElementById('recipe_id').value
+console.log(id)
             console.log('declined');
             $.ajax({
                 type: "POST",
                 url: 'decline_recipe.php',
-                data: {'o_id': <?php echo $row['o_id']?>,},
+                data: {'o_id': id},
                 success: function(response){
                     console.log('request sent')
                     location.reload();
@@ -233,71 +254,90 @@
             });
         });
 
+ 
+        $(".reply_users").on("click",function(){
+
+var id = document.getElementById('number').value
+console.log(id)
+    let person = prompt("Please enter message:", "");
+    if (person == null || person == "") {
+
+    } else {
+            $.ajax({
+                url : "reply__recipe.php",
+                type : "POST",
+                data : {id : id,message : person,},
+                success : function(data){
+                    if(data == 1){
+                        alert("Message Sent.");
+                        location.reload();
+                    }else{
+                    }
+                }
+            });
+    }
+
+});
+
+
+
                 // Single Data Star
                 $(".single_star").on("click",function(){
-        var id = <?php echo json_encode($_GET['id']);?>
-
-                $.ajax({
-                    url : "star_all_data.php",
-                    type : "POST",
-                    data : {id : id},
-                    success : function(data){
-                        if(data == 1){
+                    var id = document.getElementById('recipe_id').value
+            console.log(id)
+               $.ajax({
+                type: "POST",
+                url: 'star_single_recipe.php',
+                data: {'id': id},
+                success: function(response){
+                    if(response == 1){
                             location.reload();
                         }else{
                         }
-                    }
-                });
+                }
+            });
         });
 
         // Single Data Star
         $(".unstar").on("click",function(){
 
-        var id = <?php $_GET['id']?>
-        console.log(id)
-
-        if(id.length === 0){
-            alert("Please Select atleast one star.");
-        }else{
-            if(confirm("Do you really want to un-star this records ?")){
-                $.ajax({
-                    url : "unstar_all_data.php",
-                    type : "POST",
-                    data : {id : id},
-                    success : function(data){
-                        if(data == 1){
-                            alert("Marked as un starred.");
+            var id = document.getElementById('recipe_id').value
+            console.log(id)
+               $.ajax({
+                type: "POST",
+                url: 'unstar_single_recipe.php',
+                data: {'id': id},
+                success: function(response){
+                    if(response == 1){
                             location.reload();
                         }else{
                         }
-                    }
-                });
-            }
-        }
+                }
+            });
+
+    
         });
 
 
         // Multiple Data Delete
         $(".delete-btn").on("click",function(){
-        console.log('delete query')
-        var id = <?php $_GET['id']?>
-        console.log(id)
+            var id = document.getElementById('recipe_id').value
+            console.log(id)
 
             if(confirm("Do you really want to delete this record?")){
                 $.ajax({
-                    url : "delete_all_data.php",
+                    url : "delete_single_recipe.php",
                     type : "POST",
                     data : {id : id},
                     success : function(data){
                         if(data == 1){
-                            location.href('Recipe.php');
+                            location.href = 'appointment.php';
                         }else{
                         }
                     }
                 });
             }
         });
-
         
 var fixed = 3600        
 var seconds=fixed;

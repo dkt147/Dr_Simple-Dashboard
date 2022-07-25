@@ -124,181 +124,144 @@
                             if($_POST['filterproduct'] == 'done'){
                                 $query = "SELECT 
                                     patient.id,
-                                    patient.name as u_name,
+                                    patient.name,
                                     patient.is_active,
-                                    recipe.name as r_name,
-                                    order.id as o_id,order.power,order.u_id,order.r_id,order.is_completed,order.is_confirm, order.is_failed,    
-                                    order.date,order.is_star
-                                    FROM `order`
+                                    appointment.id as a_id,appointment.type,appointment.date,appointment.is_completed,appointment.is_confirm,   appointment.is_failed, 
+                                    appointment.book_date,appointment.reason,appointment.d_id,appointment.is_star
+                                    FROM `appointment`
                                     JOIN patient
-                                    ON patient.number = order.u_id
-                                    JOIN recipe
-                                    ON recipe.id = order.r_id WHERE  patient.name = '$name' and order.is_completed = 1
-                                    order by order.date asc";
-
+                                    ON patient.number = appointment.u_id WHERE patient.name = '$name' and appointment.type = 'recipe' and appointment.is_completed = 1
+                                    order by appointment.date asc";
                             }else if($_POST['filterproduct'] == 'undone'){
                                 $query = "SELECT 
                                     patient.id,
-                                    patient.name as u_name,
+                                    patient.name,
                                     patient.is_active,
-                                    recipe.name as r_name,
-                                    order.id as o_id,order.power,order.u_id,order.r_id,order.is_completed,order.is_confirm, order.is_failed,    
-                                    order.date,order.is_star
-                                    FROM `order`
+                                    appointment.id as a_id,appointment.type,appointment.date,appointment.is_completed,appointment.is_confirm,   appointment.is_failed, 
+                                    appointment.book_date,appointment.reason,appointment.d_id,appointment.is_star
+                                    FROM `appointment`
                                     JOIN patient
-                                    ON patient.number = order.u_id
-                                    JOIN recipe
-                                    ON recipe.id = order.r_id WHERE  patient.name = '$name' and order.is_completed = 0
-                                    order by order.date asc";
+                                    ON patient.number = appointment.u_id WHERE patient.name = '$name' and appointment.type = 'recipe' and appointment.is_completed = 0
+                                    order by appointment.date asc";
                             }else if($_POST['filterproduct'] == 'accepted'){
                                 $query = "SELECT 
                                     patient.id,
-                                    patient.name as u_name,
+                                    patient.name,
                                     patient.is_active,
-                                    recipe.name as r_name,
-                                    order.id as o_id,order.power,order.u_id,order.r_id,order.is_completed,order.is_confirm, order.is_failed,    
-                                    order.date,order.is_star
-                                    FROM `order`
+                                    appointment.id as a_id,appointment.type,appointment.date,appointment.is_completed,appointment.is_confirm,   appointment.is_failed, 
+                                    appointment.book_date,appointment.reason,appointment.d_id,appointment.is_star
+                                    FROM `appointment`
                                     JOIN patient
-                                    ON patient.number = order.u_id
-                                    JOIN recipe
-                                    ON recipe.id = order.r_id WHERE  patient.name = '$name' and order.is_confirm = 1
-                                    order by order.date asc";
+                                    ON patient.number = appointment.u_id WHERE patient.name = '$name' and appointment.type = 'recipe' and appointment.is_confirm = 1
+                                    order by appointment.date asc";
                             }else if($_POST['filterproduct'] == 'decline'){
                                 $query = "SELECT 
                                     patient.id,
-                                    patient.name as u_name,
+                                    patient.name,
                                     patient.is_active,
-                                    recipe.name as r_name,
-                                    order.id as o_id,order.power,order.u_id,order.r_id,order.is_completed,order.is_confirm, order.is_failed,    
-                                    order.date,order.is_star
-                                    FROM `order`
+                                    appointment.id as a_id,appointment.type,appointment.date,appointment.is_completed,appointment.is_confirm,   appointment.is_failed, 
+                                    appointment.book_date,appointment.reason,appointment.d_id,appointment.is_star
+                                    FROM `appointment`
                                     JOIN patient
-                                    ON patient.number = order.u_id
-                                    JOIN recipe
-                                    ON recipe.id = order.r_id WHERE  patient.name = '$name' and order.is_failed = 1
-                                    order by order.date asc";
+                                    ON patient.number = appointment.u_id WHERE patient.name = '$name' and appointment.type = 'recipe' and appointment.is_failed = 1
+                                    order by appointment.date asc";
                             }else if($_POST['filterproduct'] == 'star'){
                                 $query = "SELECT 
                                     patient.id,
-                                    patient.name as u_name,
+                                    patient.name,
                                     patient.is_active,
-                                    recipe.name as r_name,
-                                    order.id as o_id,order.power,order.u_id,order.r_id,order.is_completed,order.is_confirm, order.is_failed,    
-                                    order.date,order.is_star
-                                    FROM `order`
+                                    appointment.id as a_id,appointment.type,appointment.date,appointment.is_completed,appointment.is_confirm,   appointment.is_failed, 
+                                    appointment.book_date,appointment.reason,appointment.d_id,appointment.is_star
+                                    FROM `appointment`
                                     JOIN patient
-                                    ON patient.number = order.u_id
-                                    JOIN recipe
-                                    ON recipe.id = order.r_id WHERE  patient.name = '$name' and order.is_star = 1
-                                    order by order.date asc";
+                                    ON patient.number = appointment.u_id WHERE patient.name = '$name' and appointment.type = 'recipe' and appointment.is_star = 1
+                                    order by appointment.date asc";
                             }
                         }else if(!empty($_POST['filterproduct'])){
                             if($_POST['filterproduct'] == 'done'){
                                 $query = "SELECT 
                                     patient.id,
-                                    patient.name as u_name,
+                                    patient.name,
                                     patient.is_active,
-                                    recipe.name as r_name,
-                                    order.id as o_id,order.power,order.u_id,order.r_id,order.is_completed,order.is_confirm, order.is_failed,    
-                                    order.date,order.is_star
-                                    FROM `order`
+                                    appointment.id as a_id,appointment.type,appointment.date,appointment.is_completed,appointment.is_confirm,   appointment.is_failed, 
+                                    appointment.book_date,appointment.reason,appointment.d_id,appointment.is_star
+                                    FROM `appointment`
                                     JOIN patient
-                                    ON patient.number = order.u_id
-                                    JOIN recipe
-                                    ON recipe.id = order.r_id WHERE order.is_completed = 1
-                                    order by order.date asc";
+                                    ON patient.number = appointment.u_id WHERE appointment.type = 'recipe' and appointment.is_completed = 1
+                                    order by appointment.date asc";
                             }else if($_POST['filterproduct'] == 'undone'){
                                 $query = "SELECT 
                                     patient.id,
-                                    patient.name as u_name,
+                                    patient.name,
                                     patient.is_active,
-                                    recipe.name as r_name,
-                                    order.id as o_id,order.power,order.u_id,order.r_id,order.is_completed,order.is_confirm, order.is_failed,    
-                                    order.date,order.is_star
-                                    FROM `order`
+                                    appointment.id as a_id,appointment.type,appointment.date,appointment.is_completed,appointment.is_confirm,   appointment.is_failed, 
+                                    appointment.book_date,appointment.reason,appointment.d_id,appointment.is_star
+                                    FROM `appointment`
                                     JOIN patient
-                                    ON patient.number = order.u_id
-                                    JOIN recipe
-                                    ON recipe.id = order.r_id WHERE order.is_completed = 0
-                                    order by order.date asc";
+                                    ON patient.number = appointment.u_id WHERE appointment.type = 'recipe' and appointment.is_completed = 0
+                                    order by appointment.date asc";
                             }else if($_POST['filterproduct'] == 'accepted'){
                                 $query = "SELECT 
                                     patient.id,
-                                    patient.name as u_name,
+                                    patient.name,
                                     patient.is_active,
-                                    recipe.name as r_name,
-                                    order.id as o_id,order.power,order.u_id,order.r_id,order.is_completed,order.is_confirm, order.is_failed,    
-                                    order.date,order.is_star
-                                    FROM `order`
+                                    appointment.id as a_id,appointment.type,appointment.date,appointment.is_completed,appointment.is_confirm,   appointment.is_failed, 
+                                    appointment.book_date,appointment.reason,appointment.d_id,appointment.is_star
+                                    FROM `appointment`
                                     JOIN patient
-                                    ON patient.number = order.u_id
-                                    JOIN recipe
-                                    ON recipe.id = order.r_id WHERE order.is_confirm = 1
-                                    order by order.date asc";
+                                    ON patient.number = appointment.u_id WHERE appointment.type = 'recipe' and appointment.is_confirm = 1
+                                    order by appointment.date asc";
                             }else if($_POST['filterproduct'] == 'decline'){
                                 $query = "SELECT 
                                     patient.id,
-                                    patient.name as u_name,
+                                    patient.name,
                                     patient.is_active,
-                                    recipe.name as r_name,
-                                    order.id as o_id,order.power,order.u_id,order.r_id,order.is_completed,order.is_confirm, order.is_failed,    
-                                    order.date,order.is_star
-                                    FROM `order`
+                                    appointment.id as a_id,appointment.type,appointment.date,appointment.is_completed,appointment.is_confirm,   appointment.is_failed, 
+                                    appointment.book_date,appointment.reason,appointment.d_id,appointment.is_star
+                                    FROM `appointment`
                                     JOIN patient
-                                    ON patient.number = order.u_id
-                                    JOIN recipe
-                                    ON recipe.id = order.r_id WHERE order.is_failed = 1
-                                    order by order.date asc";
+                                    ON patient.number = appointment.u_id WHERE appointment.type = 'recipe' and appointment.is_failed = 1
+                                    order by appointment.date asc";
                             }else if($_POST['filterproduct'] == 'star'){
                                 $query = "SELECT 
                                     patient.id,
-                                    patient.name as u_name,
+                                    patient.name,
                                     patient.is_active,
-                                    recipe.name as r_name,
-                                    order.id as o_id,order.power,order.u_id,order.r_id,order.is_completed,order.is_confirm, order.is_failed,    
-                                    order.date,order.is_star
-                                    FROM `order`
+                                    appointment.id as a_id,appointment.type,appointment.date,appointment.is_completed,appointment.is_confirm,   appointment.is_failed, 
+                                    appointment.book_date,appointment.reason,appointment.d_id,appointment.is_star
+                                    FROM `appointment`
                                     JOIN patient
-                                    ON patient.number = order.u_id
-                                    JOIN recipe
-                                    ON recipe.id = order.r_id WHERE order.is_star = 1
-                                    order by order.date asc";
+                                    ON patient.number = appointment.u_id WHERE appointment.type = 'recipe' and appointment.is_star = 1
+                                    order by appointment.date asc";
                             }
                         }else{
 
+
                             $query = "SELECT 
                                     patient.id,
-                                    patient.name as u_name,
+                                    patient.name,
                                     patient.is_active,
-                                    recipe.name as r_name,
-                                    order.id as o_id,order.power,order.u_id,order.r_id,order.is_completed,order.is_confirm, order.is_failed,    
-                                    order.date,order.is_star
-                                    FROM `order`
+                                    appointment.id as a_id,appointment.type,appointment.date,appointment.is_completed,appointment.is_confirm,   appointment.is_failed, 
+                                    appointment.book_date,appointment.reason,appointment.d_id,appointment.is_star
+                                    FROM `appointment`
                                     JOIN patient
-                                    ON patient.number = order.u_id
-                                    JOIN recipe
-                                    ON recipe.id = order.r_id WHERE patient.name = '$name'
-                                    order by order.date asc";
+                                    ON patient.number = appointment.u_id WHERE patient.name = '$name' and appointment.type = 'recipe'
+                                    order by appointment.date asc";
                         }
-
 
                         $res = mysqli_query($conn, $query);
                     }
                     else{
-                        $query = "SELECT 
+                                     $query = "SELECT 
                                     patient.id,
-                                    patient.name as u_name,
+                                    patient.name,
                                     patient.is_active,
-                                    recipe.name as r_name,
-                                    order.id as o_id,order.power,order.u_id,order.r_id,order.is_completed,order.is_confirm, order.is_failed,    
-                                    order.date,order.is_star
-                                    FROM `order`
+                                    appointment.id as a_id,appointment.type,appointment.date,appointment.is_completed,appointment.is_confirm,   appointment.is_failed, 
+                                    appointment.book_date,appointment.reason,appointment.d_id,appointment.is_star
+                                    FROM `appointment`
                                     JOIN patient
-                                    ON patient.number = order.u_id
-                                    JOIN recipe
-                                    ON recipe.id = order.r_id
-                                    order by order.date asc";
+                                    ON patient.number = appointment.u_id and appointment.type = 'recipe'
+                                    order by appointment.date asc";
 
                         $res = mysqli_query($conn, $query);
                     }
@@ -309,25 +272,25 @@
                             ?>
                             <tr >
                                 <td class="table1FirstColumn">
-                                <div><i class="fa-regular fa-square forAllCheck" onclick="checkToggler(this)"></i><input type="checkbox" class="inputCheckField" name="check" value="<?php echo $row['o_id'] ?>" ></div>
+                                <div><i class="fa-regular fa-square forAllCheck" onclick="checkToggler(this)"></i><input type="checkbox" class="inputCheckField" name="check" value="<?php echo $row['a_id'] ?>" ></div>
 
                                     <?php
                                     if($row['is_star'] == 1){
                                     ?>
                                     <div class="unstar"><i class="fa-solid fa-star forAllStar" onclick="starToggler(this)" ></i>
-                                        <input type="checkbox" class="inputStarField" name="star" value="<?php echo $row['o_id'] ?>"  checked>
+                                        <input type="checkbox" class="inputStarField" name="star" value="<?php echo $row['a_id'] ?>"  checked>
                                         <?php
                                         }else{
                                         ?>
                                         <div class="single_star"><i class="fa-regular fa-star forAllStar" onclick="starToggler(this)" ></i>
-                                            <input type="checkbox" class="inputStarField" name="star" value="<?php echo $row['o_id'] ?>" >
+                                            <input type="checkbox" class="inputStarField" name="star" value="<?php echo $row['a_id'] ?>" >
                                             <?php
                                             }
                                             ?>
                                     </div>
                                 </td>
-                                <td class="table1SecondColumn" onclick="location.href = 'subpage1.php?id=<?php echo $row['o_id'] ?>';">
-                                    <p><?php echo $row['u_name'] ?>
+                                <td class="table1SecondColumn" onclick="location.href = 'subpage1.php?id=<?php echo $row['a_id'] ?>';">
+                                    <p><?php echo $row['name'] ?>
 
                                         <?php
                                         if($row['is_active'] == 1){
@@ -339,11 +302,11 @@
 
                                     </p>
                                 </td>
-                                <td  class="table1ThirdColumn" onclick="location.href = 'subpage1.php?id=<?php echo $row['o_id'] ?>';">
+                                <td  class="table1ThirdColumn" onclick="location.href = 'subpage1.php?id=<?php echo $row['a_id'] ?>';">
                                     <p><?php echo "Rezept Bestellung" ?></p>
                                 </td>
 
-                                <!-- <td class="tableDosesColumn" onclick="location.href = 'subpage1.php?id=<?php echo $row['o_id'] ?>';">
+                                <!-- <td class="tableDosesColumn" onclick="location.href = 'subpage1.php?id=<?php echo $row['a_id'] ?>';">
                                     <p><?php echo $row['power'] ?></p>
                                 </td> -->
                                 <td class="table1ForthColumn" >
@@ -380,7 +343,7 @@
 
 
                                 </td>
-                                <td class="table1FifthColumn" onclick="location.href = 'subpage1.php?id=<?php echo $row['o_id'] ?>';">
+                                <td class="table1FifthColumn" onclick="location.href = 'subpage1.php?id=<?php echo $row['a_id'] ?>';">
                                     <p><?php echo $row['date'] ?></p>
                                 </td>
                             </tr>
@@ -443,7 +406,7 @@
 
             if(confirm("Do you really want to un-star this records ?")){
                 $.ajax({
-                    url : "unstar_referal_data.php",
+                    url : "unstar_recipe_data.php",
                     type : "POST",
                     data : {id : id},
                     success : function(data){

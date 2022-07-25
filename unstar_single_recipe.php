@@ -2,10 +2,9 @@
 
 $id = $_POST['id'];
 
-$str = implode($id, ","); // Convert Array into String
 include 'config.php';
 
-$sql = "DELETE FROM `appointment` WHERE id IN ({$str})";
+$sql = "UPDATE `appointment` SET is_star = 0 WHERE id = $id";
 
 if(mysqli_query($conn, $sql)){
     echo 1;
@@ -14,4 +13,3 @@ if(mysqli_query($conn, $sql)){
 }
 
 ?>
-

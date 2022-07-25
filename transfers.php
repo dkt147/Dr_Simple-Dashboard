@@ -122,67 +122,56 @@
                                     patient.id,
                                     patient.name,
                                     patient.is_active,
-                                    referal.id as r_id,referal.u_id,referal.c_id,referal.is_confirm,referal.is_completed,  referal.is_failed,  referal.is_star,
-                                    referal.date,categories.name as c_name,categories.detail
-                                    FROM `referal`
+                                    appointment.id as a_id,appointment.type,appointment.date,appointment.is_completed,appointment.is_confirm,   appointment.is_failed, 
+                                    appointment.book_date,appointment.reason,appointment.d_id,appointment.is_star
+                                    FROM `appointment`
                                     JOIN patient
-                                    ON patient.number = referal.u_id
-                                    JOIN categories
-                                    ON categories.id = referal.c_id WHERE  patient.name = '$name' and referal.is_completed = 1
-                                    order by referal.date asc";
-
+                                    ON patient.number = appointment.u_id WHERE patient.name = '$name' and appointment.type = 'referal' and appointment.is_completed = 1
+                                    order by appointment.date asc";
                             }else if($_POST['filterproduct'] == 'undone'){
                                 $query = "SELECT 
                                     patient.id,
                                     patient.name,
                                     patient.is_active,
-                                    referal.id as r_id,referal.u_id,referal.c_id,referal.is_confirm,referal.is_completed,  referal.is_failed,  referal.is_star,
-                                    referal.date,categories.name as c_name,categories.detail
-                                    FROM `referal`
+                                    appointment.id as a_id,appointment.type,appointment.date,appointment.is_completed,appointment.is_confirm,   appointment.is_failed, 
+                                    appointment.book_date,appointment.reason,appointment.d_id,appointment.is_star
+                                    FROM `appointment`
                                     JOIN patient
-                                    ON patient.number = referal.u_id
-                                    JOIN categories
-                                    ON categories.id = referal.c_id WHERE  patient.name = '$name' and referal.is_completed = 0
-                                    order by referal.date asc";
+                                    ON patient.number = appointment.u_id WHERE patient.name = '$name' and appointment.type = 'referal' and appointment.is_completed = 0
+                                    order by appointment.date asc";
                             }else if($_POST['filterproduct'] == 'accepted'){
                                 $query = "SELECT 
                                     patient.id,
                                     patient.name,
                                     patient.is_active,
-                                    referal.id as r_id,referal.u_id,referal.c_id,referal.is_confirm,referal.is_completed,  referal.is_failed,  referal.is_star,
-                                    referal.date,categories.name as c_name,categories.detail
-                                    FROM `referal`
+                                    appointment.id as a_id,appointment.type,appointment.date,appointment.is_completed,appointment.is_confirm,   appointment.is_failed, 
+                                    appointment.book_date,appointment.reason,appointment.d_id,appointment.is_star
+                                    FROM `appointment`
                                     JOIN patient
-                                    ON patient.number = referal.u_id
-                                    JOIN categories
-                                    ON categories.id = referal.c_id WHERE  patient.name = '$name' and referal.is_confirm = 1
-                                    order by referal.date asc";
+                                    ON patient.number = appointment.u_id WHERE patient.name = '$name' and appointment.type = 'referal' and appointment.is_confirm = 1
+                                    order by appointment.date asc";
                             }else if($_POST['filterproduct'] == 'decline'){
                                 $query = "SELECT 
                                     patient.id,
                                     patient.name,
                                     patient.is_active,
-                                    referal.id as r_id,referal.u_id,referal.c_id,referal.is_confirm,referal.is_completed,  referal.is_failed,  referal.is_star,
-                                    referal.date,categories.name as c_name,categories.detail
-                                    FROM `referal`
+                                    appointment.id as a_id,appointment.type,appointment.date,appointment.is_completed,appointment.is_confirm,   appointment.is_failed, 
+                                    appointment.book_date,appointment.reason,appointment.d_id,appointment.is_star
+                                    FROM `appointment`
                                     JOIN patient
-                                    ON patient.number = referal.u_id
-                                    JOIN categories
-                                    ON categories.id = referal.c_id WHERE  patient.name = '$name' and referal.is_failed = 1
-                                    order by referal.date asc";
+                                    ON patient.number = appointment.u_id WHERE patient.name = '$name' and appointment.type = 'referal' and appointment.is_failed = 1
+                                    order by appointment.date asc";
                             }else if($_POST['filterproduct'] == 'star'){
                                 $query = "SELECT 
                                     patient.id,
                                     patient.name,
                                     patient.is_active,
-                                    referal.id as r_id,referal.u_id,referal.c_id,referal.is_confirm,referal.is_completed,  referal.is_failed,  referal.is_star,
-                                    referal.date,categories.name as c_name,categories.detail
-                                    FROM `referal`
+                                    appointment.id as a_id,appointment.type,appointment.date,appointment.is_completed,appointment.is_confirm,   appointment.is_failed, 
+                                    appointment.book_date,appointment.reason,appointment.d_id,appointment.is_star
+                                    FROM `appointment`
                                     JOIN patient
-                                    ON patient.number = referal.u_id
-                                    JOIN categories
-                                    ON categories.id = referal.c_id WHERE  patient.name = '$name' and referal.is_star = 1
-                                    order by referal.date asc";
+                                    ON patient.number = appointment.u_id WHERE patient.name = '$name' and appointment.type = 'referal' and appointment.is_star = 1
+                                    order by appointment.date asc";
                             }
                         }else if(!empty($_POST['filterproduct'])){
                             if($_POST['filterproduct'] == 'done'){
@@ -190,98 +179,85 @@
                                     patient.id,
                                     patient.name,
                                     patient.is_active,
-                                    referal.id as r_id,referal.u_id,referal.c_id,referal.is_confirm,referal.is_completed,  referal.is_failed,  referal.is_star,
-                                    referal.date,categories.name as c_name,categories.detail
-                                    FROM `referal`
+                                    appointment.id as a_id,appointment.type,appointment.date,appointment.is_completed,appointment.is_confirm,   appointment.is_failed, 
+                                    appointment.book_date,appointment.reason,appointment.d_id,appointment.is_star
+                                    FROM `appointment`
                                     JOIN patient
-                                    ON patient.number = referal.u_id
-                                    JOIN categories
-                                    ON categories.id = referal.c_id WHERE referal.is_completed = 1
-                                    order by referal.date asc";
+                                    ON patient.number = appointment.u_id WHERE appointment.type = 'referal' and appointment.is_completed = 1
+                                    order by appointment.date asc";
                             }else if($_POST['filterproduct'] == 'undone'){
                                 $query = "SELECT 
                                     patient.id,
                                     patient.name,
                                     patient.is_active,
-                                    referal.id as r_id,referal.u_id,referal.c_id,referal.is_confirm,referal.is_completed,  referal.is_failed,  referal.is_star,
-                                    referal.date,categories.name as c_name,categories.detail
-                                    FROM `referal`
+                                    appointment.id as a_id,appointment.type,appointment.date,appointment.is_completed,appointment.is_confirm,   appointment.is_failed, 
+                                    appointment.book_date,appointment.reason,appointment.d_id,appointment.is_star
+                                    FROM `appointment`
                                     JOIN patient
-                                    ON patient.number = referal.u_id
-                                    JOIN categories
-                                    ON categories.id = referal.c_id WHERE referal.is_completed = 0
-                                    order by referal.date asc";
+                                    ON patient.number = appointment.u_id WHERE appointment.type = 'referal' and appointment.is_completed = 0
+                                    order by appointment.date asc";
                             }else if($_POST['filterproduct'] == 'accepted'){
                                 $query = "SELECT 
                                     patient.id,
                                     patient.name,
                                     patient.is_active,
-                                    referal.id as r_id,referal.u_id,referal.c_id,referal.is_confirm,referal.is_completed,  referal.is_failed,  referal.is_star,
-                                    referal.date,categories.name as c_name,categories.detail
-                                    FROM `referal`
+                                    appointment.id as a_id,appointment.type,appointment.date,appointment.is_completed,appointment.is_confirm,   appointment.is_failed, 
+                                    appointment.book_date,appointment.reason,appointment.d_id,appointment.is_star
+                                    FROM `appointment`
                                     JOIN patient
-                                    ON patient.number = referal.u_id
-                                    JOIN categories
-                                    ON categories.id = referal.c_id WHERE referal.is_confirm = 1
-                                    order by referal.date asc";
+                                    ON patient.number = appointment.u_id WHERE appointment.type = 'referal' and appointment.is_confirm = 1
+                                    order by appointment.date asc";
                             }else if($_POST['filterproduct'] == 'decline'){
                                 $query = "SELECT 
                                     patient.id,
                                     patient.name,
                                     patient.is_active,
-                                    referal.id as r_id,referal.u_id,referal.c_id,referal.is_confirm,referal.is_completed,  referal.is_failed,  referal.is_star,
-                                    referal.date,categories.name as c_name,categories.detail
-                                    FROM `referal`
+                                    appointment.id as a_id,appointment.type,appointment.date,appointment.is_completed,appointment.is_confirm,   appointment.is_failed, 
+                                    appointment.book_date,appointment.reason,appointment.d_id,appointment.is_star
+                                    FROM `appointment`
                                     JOIN patient
-                                    ON patient.number = referal.u_id
-                                    JOIN categories
-                                    ON categories.id = referal.c_id WHERE referal.is_failed = 1
-                                    order by referal.date asc";
+                                    ON patient.number = appointment.u_id WHERE appointment.type = 'referal' and appointment.is_failed = 1
+                                    order by appointment.date asc";
                             }else if($_POST['filterproduct'] == 'star'){
                                 $query = "SELECT 
                                     patient.id,
                                     patient.name,
                                     patient.is_active,
-                                    referal.id as r_id,referal.u_id,referal.c_id,referal.is_confirm,referal.is_completed,  referal.is_failed,  referal.is_star,
-                                    referal.date,categories.name as c_name,categories.detail
-                                    FROM `referal`
+                                    appointment.id as a_id,appointment.type,appointment.date,appointment.is_completed,appointment.is_confirm,   appointment.is_failed, 
+                                    appointment.book_date,appointment.reason,appointment.d_id,appointment.is_star
+                                    FROM `appointment`
                                     JOIN patient
-                                    ON patient.number = referal.u_id
-                                    JOIN categories
-                                    ON categories.id = referal.c_id WHERE referal.is_star = 1
-                                    order by referal.date asc";
+                                    ON patient.number = appointment.u_id WHERE appointment.type = 'referal' and appointment.is_star = 1
+                                    order by appointment.date asc";
                             }
                         }else{
+
 
                             $query = "SELECT 
                                     patient.id,
                                     patient.name,
                                     patient.is_active,
-                                    referal.id as r_id,referal.u_id,referal.c_id,referal.is_confirm,referal.is_completed,  referal.is_failed,  referal.is_star,
-                                    referal.date,categories.name as c_name,categories.detail
-                                    FROM `referal`
+                                    appointment.id as a_id,appointment.type,appointment.date,appointment.is_completed,appointment.is_confirm,   appointment.is_failed, 
+                                    appointment.book_date,appointment.reason,appointment.d_id,appointment.is_star
+                                    FROM `appointment`
                                     JOIN patient
-                                    ON patient.number = referal.u_id
-                                    JOIN categories
-                                    ON categories.id = referal.c_id WHERE  patient.name = '$name'
-                                    order by referal.date asc";
+                                    ON patient.number = appointment.u_id WHERE patient.name = '$name' and appointment.type = 'referal'
+                                    order by appointment.date asc";
                         }
 
                         $res = mysqli_query($conn, $query);
                     }
                     else{
-                        $query = "SELECT 
+                                     $query = "SELECT 
                                     patient.id,
                                     patient.name,
                                     patient.is_active,
-                                    referal.id as r_id,referal.u_id,referal.c_id,referal.is_confirm,referal.is_completed,  referal.is_failed,  referal.is_star,
-                                    referal.date,categories.name as c_name,categories.detail
-                                    FROM `referal`
+                                    appointment.id as a_id,appointment.type,appointment.date,appointment.is_completed,appointment.is_confirm,   appointment.is_failed, 
+                                    appointment.book_date,appointment.reason,appointment.d_id,appointment.is_star
+                                    FROM `appointment`
                                     JOIN patient
-                                    ON patient.number = referal.u_id
-                                    JOIN categories
-                                    ON categories.id = referal.c_id
-                                    order by referal.date asc";
+                                    ON patient.number = appointment.u_id and appointment.type = 'referal'
+                                    order by appointment.date asc";
 
                         $res = mysqli_query($conn, $query);
                     }
@@ -294,24 +270,24 @@
                             <tr >
                                 <td class="table1FirstColumn">
                                     
-                                <div><i class="fa-regular fa-square forAllCheck" onclick="checkToggler(this)"></i><input type="checkbox" class="inputCheckField" name="check" value="<?php echo $row['r_id'] ?>" ></div>
+                                <div><i class="fa-regular fa-square forAllCheck" onclick="checkToggler(this)"></i><input type="checkbox" class="inputCheckField" name="check" value="<?php echo $row['a_id'] ?>" ></div>
 
                                     <?php
                                     if($row['is_star'] == 1){
                                     ?>
                                     <div class="unstar"><i class="fa-solid fa-star forAllStar" onclick="starToggler(this)" ></i>
-                                        <input type="checkbox" class="inputStarField" name="star" value="<?php echo $row['r_id'] ?>"  checked>
+                                        <input type="checkbox" class="inputStarField" name="star" value="<?php echo $row['a_id'] ?>"  checked>
                                         <?php
                                         }else{
                                         ?>
                                         <div class="single_star"><i class="fa-regular fa-star forAllStar" onclick="starToggler(this)" ></i>
-                                            <input type="checkbox" class="inputStarField" name="star" value="<?php echo $row['r_id'] ?>" >
+                                            <input type="checkbox" class="inputStarField" name="star" value="<?php echo $row['a_id'] ?>" >
                                             <?php
                                             }
                                             ?>
                                     </div>
                                 </td>
-                                <td class="table1SecondColumn" onclick="location.href = 'subpage6.php?id=<?php echo $row['r_id'] ?>';">
+                                <td class="table1SecondColumn" onclick="location.href = 'subpage6.php?id=<?php echo $row['a_id'] ?>';">
                                     <p><?php echo $row['name'] ?>
                                         <?php
                                         if($row['is_active'] == 1){
@@ -322,10 +298,10 @@
                                         ?>
                                     </p>
                                 </td>
-                                <td class="table1ThirdColumn" onclick="location.href = 'subpage6.php?id=<?php echo $row['r_id'] ?>';">
+                                <td class="table1ThirdColumn" onclick="location.href = 'subpage6.php?id=<?php echo $row['a_id'] ?>';">
                                     <p><?php echo "Überweisung Bestellung" ?></p>
                                 </td>
-                                <td class="table1ForthColumn" onclick="location.href = 'subpage6.php?id=<?php echo $row['r_id'] ?>';">
+                                <td class="table1ForthColumn" onclick="location.href = 'subpage6.php?id=<?php echo $row['a_id'] ?>';">
                                     <?php
                                     if($row['is_confirm'] == 1 and $row['is_completed'] == 0 and $row['is_failed'] == 0){
                                         ?>
@@ -353,7 +329,7 @@
                                     <?php  }
                                     ?>
                                 </td>
-                                <td class="table1FifthColumn" onclick="location.href = 'subpage6.php?id=<?php echo $row['r_id'] ?>';">
+                                <td class="table1FifthColumn" onclick="location.href = 'subpage6.php?id=<?php echo $row['a_id'] ?>';">
                                     <p><?php echo $row['date'] ?></p>
                                 </td>
                             </tr>

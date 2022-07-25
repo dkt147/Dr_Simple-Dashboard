@@ -309,8 +309,10 @@
                                     echo "Akute Sprechstunde Anfrage";
                                 }elseif ($row['type'] == 'regular'){
                                     echo "Regulärer Termin Anfrage";
-                                }else{
+                                }elseif ($row['type'] == 'recipe'){
                                     echo "Rezept Bestellung";
+                                }elseif ($row['type'] == 'referal'){
+                                    echo "Überweisungen Bestellung";
                                 }
                                  $row['reason']
 

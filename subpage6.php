@@ -47,21 +47,23 @@
                 //Stablishing Connection...
                 include 'config.php';
                 $id = $_GET['id'];
-                $query = "SELECT 
+                   
+                              $query = "SELECT 
                                     patient.id,
                                     patient.name,
+                                    patient.is_active,
                                     patient.dob,
                                     patient.number,
-                                    patient.is_active,
-                                    referal.id as r_id,referal.u_id,referal.c_id,referal.is_confirm,referal.is_completed,    
-                                    referal.date,categories.name as c_name,categories.detail,referal.is_failed
-                                    FROM `referal`
+                                    categories.id as c_id,
+                                    categories.user_id,
+                                    categories.name as c_name,
+                                    appointment.id as a_id,appointment.r_id,appointment.type,appointment.date,appointment.is_completed,appointment.is_confirm,   appointment.is_failed, 
+                                    appointment.book_date,appointment.reason,appointment.d_id,appointment.is_star
+                                    FROM `appointment`
                                     JOIN patient
-                                    ON patient.number = referal.u_id
+                                    ON patient.number = appointment.u_id
                                     JOIN categories
-                                    ON categories.id = referal.c_id
-                                    where referal.id = '$id'
-                                    order by id desc";
+                                    ON categories.id = appointment.c_id WHERE appointment.id = '$id'";
 
                 $res = mysqli_query($conn, $query);
                 $row = mysqli_fetch_assoc($res);
@@ -105,9 +107,23 @@
                             </td>
                             <td class="tableSeparator2">|</td>
                             <td class="table3HeaderIcons">
-                                <section><i class="fa-regular fa-star"></i></section>
-                                <section><i class="fa-solid fa-reply"></i></section>
-                                <section><img src="./image/Dashboard/TitleSection/trash.png" alt=""></section>
+                           
+                                <?php
+                                    if($row['is_star'] == 1){
+                                    ?>
+                                    <div class="unstar"><i class="fa-solid fa-star forAllStar" onclick="starToggler(this)" ></i>
+                                        <input type="checkbox" class="inputStarField" name="star" value="<?php echo $_GET['id'] ?>"  checked>
+                                        <?php
+                                        }else{
+                                        ?>
+                                        <div class="single_star"><i class="fa-regular fa-star forAllStar" onclick="starToggler(this)" ></i>
+                                            <input type="checkbox" class="inputStarField" name="star" value="<?php echo $_GET['id'] ?>" >
+                                            <?php
+                                            }
+                                            ?>
+                                    </div>
+                                <section class="reply_user"><i class="fa-solid fa-reply"></i></section>
+                                <section class="delete-btn"><img src="./image/Dashboard/TitleSection/trash.png" alt=""></section>
                             </td>
                         </tr>
                         <tr class="table3Content">
@@ -139,6 +155,9 @@
                                 <p>Überweisung:</p>
                             </td>
                             <td>
+                                <input hidden value="<?php echo $row['id']?>" id="patient_id">
+                                <input hidden value="<?php echo $row['number']?>" id="number">
+                                <input hidden value="<?php echo $row['a_id']?>" id="recipe_id">
                                 <p> <?php echo $row['c_name']?></p>
                             </td>
                         </tr>
@@ -216,11 +235,12 @@
     $(document).ready(function(){
 
         $("#acceptRequest").click(function(){
-            console.log('accepted');
+            var id = document.getElementById('recipe_id').value
+console.log(id)
             $.ajax({
                 type: "POST",
                 url: 'accept_referal.php',
-                data: {'r_id': <?php echo $row['r_id']?>,},
+                data: {'r_id': id},
                 success: function(response){
                     console.log('request sent')
                     location.reload();
@@ -229,11 +249,12 @@
         });
 
         $("#declineRequest").click(function(){
-            console.log('declined');
+            var id = document.getElementById('recipe_id').value
+console.log(id)
             $.ajax({
                 type: "POST",
                 url: 'decline_referal.php',
-                data: {'r_id': <?php echo $row['r_id']?>,},
+                data: {'r_id': id},
                 success: function(response){
                     console.log('request sent')
                     location.reload();
@@ -253,6 +274,90 @@
                 }
             });
         });
+
+
+        $(".reply_user").on("click",function(){
+
+var id = document.getElementById('number').value
+console.log(id)
+    let person = prompt("Please enter message:", "");
+    if (person == null || person == "") {
+
+    } else {
+            $.ajax({
+                url : "reply__recipe.php",
+                type : "POST",
+                data : {id : id,message : person,},
+                success : function(data){
+                    if(data == 1){
+                        alert("Message Sent.");
+                        location.reload();
+                    }else{
+                    }
+                }
+            });
+    }
+
+});
+
+
+    // Single Data Star
+    $(".single_star").on("click",function(){
+        var id = document.getElementById('recipe_id').value
+console.log(id)
+   $.ajax({
+    type: "POST",
+    url: 'star_single_recipe.php',
+    data: {'id': id},
+    success: function(response){
+        if(data == 1){
+                location.reload();
+            }else{
+            }
+    }
+});
+});
+
+// Single Data Star
+$(".unstar").on("click",function(){
+
+var id = document.getElementById('recipe_id').value
+console.log(id)
+   $.ajax({
+    type: "POST",
+    url: 'unstar_single_recipe.php',
+    data: {'id': id},
+    success: function(response){
+        if(response == 1){
+                location.reload();
+            }else{
+            }
+    }
+});
+
+
+});
+
+
+// Multiple Data Delete
+$(".delete-btn").on("click",function(){
+var id = document.getElementById('recipe_id').value
+console.log(id)
+
+if(confirm("Do you really want to delete this record?")){
+    $.ajax({
+        url : "delete_single_recipe.php",
+        type : "POST",
+        data : {id : id},
+        success : function(data){
+            if(data == 1){
+                location.href = 'transfers.php';
+            }else{
+            }
+        }
+    });
+}
+});
 
         
 var fixed = 3600        
